@@ -1,0 +1,16 @@
+services:
+  codex:
+    build:
+      context: .
+      dockerfile: Dockerfile.codex
+    container_name: ditto-codex
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    volumes:
+      - .:/workspace
+      - ${HOME}/.codex:/root/.codex
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
