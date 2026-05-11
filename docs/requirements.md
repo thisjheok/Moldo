@@ -197,10 +197,10 @@ Based on the product policy:
 
 The web app must follow [design.md](/workspace/docs/design.md) as the default design source of truth.
 
-- White is the default page background.
-- The UI uses mostly solid colors rather than gradients, glows, or decorative textures.
-- Orange is the primary brand/action color.
-- Prefer simple surfaces, clear hierarchy, and stable spacing over decorative visual effects.
+- A near-white lavender-tinted background is the default page foundation.
+- The UI uses soft white surfaces, thin lavender borders, and restrained violet gradients for primary actions.
+- Violet/lavender is the primary brand and action color family.
+- Prefer dashboard clarity, stable spacing, and fast access to speaking tests over decorative visual effects.
 
 ## 11. First Implementation Milestones
 
