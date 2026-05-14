@@ -1,33 +1,58 @@
 import Link from "next/link";
+import { getResult } from "../../lib/api";
+import { ApiErrorState } from "../components/ApiState";
+import { FeedbackCard } from "../components/FeedbackCard";
+import { ResultAnswerCard } from "../components/ResultAnswerCard";
+import { ScoreCard } from "../components/ScoreCard";
 import { SiteHeader } from "../components/SiteHeader";
+import { formatDateTime, formatScore } from "../../utils/formatters";
 
-type ResultIconName = "arrow" | "play";
-
-const scoreCards = [
-  { label: "질문 정확성", score: 84 },
-  { label: "전달 정확성", score: 80 },
-  { label: "유창성", score: 78 },
-  { label: "문법 구조", score: 86 },
-];
-
-function ResultIcon({ name }: { name: ResultIconName }) {
-  if (name === "arrow") {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M5 12h14" />
-        <path d="m13 6 6 6-6 6" />
-      </svg>
-    );
-  }
-
+function ArrowIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m8 5 11 7-11 7V5Z" />
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
     </svg>
   );
 }
 
-export default function ResultPage() {
+const DEFAULT_RESULT_ID = "result-opic-mock-a-20240514";
+
+type ResultPageProps = {
+  searchParams?: Promise<{
+    resultId?: string;
+  }>;
+};
+
+export default async function ResultPage({ searchParams }: ResultPageProps) {
+  const params = await searchParams;
+  const resultId = params?.resultId ?? DEFAULT_RESULT_ID;
+  const result = await getResult(resultId).catch(() => null);
+
+  if (result === null) {
+    return (
+      <div className="app-shell">
+        <SiteHeader />
+        <main className="result-main">
+          <ApiErrorState message="결과 정보를 불러오지 못했습니다." />
+        </main>
+      </div>
+    );
+  }
+
+  const selectedAnswer = result.answers[0];
+
+  if (!selectedAnswer) {
+    return (
+      <div className="app-shell">
+        <SiteHeader />
+        <main className="result-main">
+          <ApiErrorState message="표시할 결과 답변이 없습니다." />
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell">
       <SiteHeader />
@@ -36,94 +61,53 @@ export default function ResultPage() {
         <section className="result-score-section">
           <div className="result-exam-heading">
             <span>모의고사 결과</span>
-            <h1 id="result-title">모의고사 A</h1>
-            <p>2024-05-14 14:20 응시</p>
+            <h1 id="result-title">{result.examTitle}</h1>
+            <p>{formatDateTime(result.takenAt)} 응시</p>
           </div>
 
           <div className="result-total-score" aria-label="총점">
-            <strong>82점</strong>
-            <span>/ 100</span>
+            <strong>{formatScore(result.totalScore)}</strong>
+            <span>/ {result.maxScore}</span>
           </div>
 
           <div className="result-score-grid" aria-label="세부 평가 점수">
-            {scoreCards.map((card) => (
-              <article className="result-score-card" key={card.label}>
-                <h2>{card.label}</h2>
-                <strong>{card.score}</strong>
-                <span>/100</span>
-              </article>
+            {result.scores.map((score) => (
+              <ScoreCard score={score} key={score.category} />
             ))}
           </div>
         </section>
 
         <section className="result-question-bar" aria-label="문항 정보">
           <p>
-            <strong>문항 3.</strong> 당신의 스마트폰 사용 습관에 대해 설명하고, 바꾸고 싶은
-            점이 있다면 말해보세요.
+            <strong>문항 {selectedAnswer.questionOrder}.</strong> {selectedAnswer.questionPrompt}
           </p>
-          <Link href="/exam">
-            다른 문항 보기 (3 / 15)
-            <ResultIcon name="arrow" />
+          <Link href={`/exam?examId=${result.examId}`}>
+            다른 문항 보기 ({selectedAnswer.questionOrder} / {result.questionCount})
+            <ArrowIcon />
           </Link>
         </section>
 
         <section className="result-answer-grid" aria-label="답변 비교">
-          <article className="result-answer-card">
-            <h2>내 답변 <span>(전사 내용)</span></h2>
-            <p>
-              I use my smartphone a lot every day.
-              <br />
-              I check SNS and watch videos.
-              <br />
-              Sometimes it wastes my time.
-              <br />I want to use it less.
-            </p>
-            <div className="result-audio-row">
-              <button type="button">
-                <ResultIcon name="play" />
-                내 답변 듣기
-              </button>
-              <time>0:28</time>
-            </div>
-          </article>
+          <ResultAnswerCard
+            title="내 답변"
+            subtitle="전사 내용"
+            content={selectedAnswer.transcript}
+            audioLabel="내 답변 듣기"
+            durationSeconds={selectedAnswer.durationSeconds}
+          />
 
-          <article className="result-answer-card">
-            <h2>이렇게 말하면 더 좋아요 <span>(모범 답변)</span></h2>
-            <p>
-              I use my smartphone a lot every day, <mark>especially</mark>
-              <br />
-              for SNS and watching videos. However, it
-              <br />
-              <mark>often wastes</mark> my time, so I want to reduce my
-              <br />
-              screen time and use it more productively.
-            </p>
-            <div className="result-audio-row">
-              <button type="button">
-                <ResultIcon name="play" />
-                모범 답변 듣기
-              </button>
-              <time>0:31</time>
-            </div>
-          </article>
+          <ResultAnswerCard
+            title="이렇게 말하면 더 좋아요"
+            subtitle="모범 답변"
+            content={selectedAnswer.modelAnswer}
+            audioLabel="모범 답변 듣기"
+            durationSeconds={selectedAnswer.modelAnswerDurationSeconds}
+          />
         </section>
 
         <section className="result-feedback-grid" aria-label="평가 피드백">
-          <article className="result-feedback-card good">
-            <h2>잘한 점</h2>
-            <ul>
-              <li>질문의 핵심 내용을 모두 포함했어요.</li>
-              <li>간단한 문장으로 자신의 생각을 표현했어요.</li>
-            </ul>
-          </article>
-
-          <article className="result-feedback-card improve">
-            <h2>개선할 점</h2>
-            <ul>
-              <li>접속사(However, so 등)를 활용해 보세요.</li>
-              <li>구체적인 예시를 추가하면 더 좋아요.</li>
-            </ul>
-          </article>
+          <FeedbackCard title="잘한 점" tone="good" items={selectedAnswer.strengths} />
+          <FeedbackCard title="개선할 점" tone="improve" items={selectedAnswer.improvements} />
         </section>
       </main>
     </div>

@@ -1,0 +1,19 @@
+{
+  "name": "@repo/types",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./exam": "./src/exam.ts",
+    "./session": "./src/session.ts",
+    "./result": "./src/result.ts",
+    "./history": "./src/history.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}

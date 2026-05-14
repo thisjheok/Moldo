@@ -1,61 +1,15 @@
-import Link from "next/link";
+import { getMyProfile, listMyResults } from "../../lib/api";
+import { ApiErrorState } from "../components/ApiState";
+import { HistoryTable } from "../components/HistoryTable";
 import { SiteHeader } from "../components/SiteHeader";
 
-type MyPageIconName = "chevron" | "feedback" | "user";
-
-const examHistory = [
-  {
-    date: "2024-05-14 14:20",
-    exam: "모의고사 A",
-    questions: 15,
-    score: "82점",
-    duration: "15:18",
-  },
-  {
-    date: "2024-05-10 10:05",
-    exam: "모의고사 B",
-    questions: 15,
-    score: "76점",
-    duration: "15:02",
-  },
-  {
-    date: "2024-05-07 16:30",
-    exam: "실전형 세션",
-    questions: 12,
-    score: "88점",
-    duration: "12:11",
-  },
-  {
-    date: "2024-05-02 11:15",
-    exam: "모의고사 A",
-    questions: 15,
-    score: "70점",
-    duration: "15:27",
-  },
-  {
-    date: "2024-04-28 09:40",
-    exam: "모의고사 B",
-    questions: 15,
-    score: "65점",
-    duration: "15:33",
-  },
-];
+type MyPageIconName = "chevron" | "user";
 
 function MyPageIcon({ name }: { name: MyPageIconName }) {
   if (name === "chevron") {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="m9 18 6-6-6-6" />
-      </svg>
-    );
-  }
-
-  if (name === "feedback") {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 5h16v11H8l-4 4V5Z" />
-        <path d="M8 9h8" />
-        <path d="M8 13h5" />
       </svg>
     );
   }
@@ -68,7 +22,23 @@ function MyPageIcon({ name }: { name: MyPageIconName }) {
   );
 }
 
-export default function MyPage() {
+export default async function MyPage() {
+  const [profile, results] = await Promise.all([
+    getMyProfile().catch(() => null),
+    listMyResults().catch(() => null),
+  ]);
+
+  if (profile === null || results === null) {
+    return (
+      <div className="app-shell">
+        <SiteHeader />
+        <main className="mypage-main">
+          <ApiErrorState message="마이페이지 정보를 불러오지 못했습니다." />
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell">
       <SiteHeader />
@@ -80,14 +50,14 @@ export default function MyPage() {
               <MyPageIcon name="user" />
             </span>
             <div>
-              <h1>홍길동</h1>
-              <p>hong@example.com</p>
+              <h1>{profile.name}</h1>
+              <p>{profile.email}</p>
             </div>
           </div>
 
           <div className="mypage-total">
             <span>총 응시 횟수</span>
-            <strong>12회</strong>
+            <strong>{profile.totalExamCount}회</strong>
           </div>
         </section>
 
@@ -101,37 +71,7 @@ export default function MyPage() {
             </button>
           </div>
 
-          <div className="mypage-table-wrap">
-            <table className="mypage-table">
-              <thead>
-                <tr>
-                  <th scope="col">날짜</th>
-                  <th scope="col">시험명</th>
-                  <th scope="col">문항 수</th>
-                  <th scope="col">점수</th>
-                  <th scope="col">소요 시간</th>
-                  <th scope="col">작업</th>
-                </tr>
-              </thead>
-              <tbody>
-                {examHistory.map((history) => (
-                  <tr key={`${history.date}-${history.exam}`}>
-                    <td>{history.date}</td>
-                    <td>{history.exam}</td>
-                    <td>{history.questions}</td>
-                    <td>{history.score}</td>
-                    <td>{history.duration}</td>
-                    <td>
-                      <Link className="mypage-feedback-link" href="/result">
-                        <MyPageIcon name="feedback" />
-                        <span>피드백 보기</span>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <HistoryTable histories={results} />
 
           <nav className="mypage-pagination" aria-label="응시 기록 페이지">
             <button type="button" aria-label="이전 페이지">

@@ -239,6 +239,15 @@ svg {
   background: var(--gradient-primary-hover);
 }
 
+.button:disabled,
+.audio-play-button:disabled,
+.exam-end-button:disabled,
+.question-number-grid button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  transform: none;
+}
+
 .button:active,
 .filter-button:active,
 .sort-button:active,
@@ -1835,6 +1844,38 @@ svg {
   background: var(--gradient-primary);
   color: #ffffff;
   box-shadow: var(--shadow-control);
+}
+
+.question-number-grid button.played {
+  border-color: rgba(124, 92, 235, 0.38);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.question-number-grid button.playing {
+  border-color: rgba(124, 92, 235, 0.42);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.question-number-grid button.recording {
+  border-color: rgba(220, 38, 38, 0.28);
+  background: #fef2f2;
+  color: var(--color-danger);
+}
+
+.question-number-grid button.completed {
+  border-color: rgba(31, 142, 85, 0.28);
+  background: #ecfdf3;
+  color: #1f8e55;
+}
+
+.question-number-grid button.active.completed,
+.question-number-grid button.active.recording,
+.question-number-grid button.active.playing,
+.question-number-grid button.active.played {
+  border: 0;
+  color: #ffffff;
 }
 
 .prompt-card {

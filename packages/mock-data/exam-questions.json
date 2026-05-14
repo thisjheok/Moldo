@@ -1,0 +1,137 @@
+[
+  {
+    "id": "opic-mock-a-q1",
+    "examId": "opic-mock-a",
+    "order": 1,
+    "type": "self_intro",
+    "ttsScriptEn": "Please introduce yourself. Include your work or studies and your interests.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q2",
+    "examId": "opic-mock-a",
+    "order": 2,
+    "type": "survey_topic",
+    "ttsScriptEn": "Describe your home or neighborhood in detail.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q3",
+    "examId": "opic-mock-a",
+    "order": 3,
+    "type": "survey_topic",
+    "ttsScriptEn": "Describe your smartphone habits and what you would like to change.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q4",
+    "examId": "opic-mock-a",
+    "order": 4,
+    "type": "past_experience",
+    "ttsScriptEn": "Choose a memorable trip and describe what you did there.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q5",
+    "examId": "opic-mock-a",
+    "order": 5,
+    "type": "comparison",
+    "ttsScriptEn": "Compare your leisure activities in the past and now.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q6",
+    "examId": "opic-mock-a",
+    "order": 6,
+    "type": "role_play",
+    "ttsScriptEn": "Call a restaurant and ask to change your reservation time.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q7",
+    "examId": "opic-mock-a",
+    "order": 7,
+    "type": "problem_solving",
+    "ttsScriptEn": "You will be late to meet a friend. Explain the situation and suggest an alternative.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q8",
+    "examId": "opic-mock-a",
+    "order": 8,
+    "type": "survey_topic",
+    "ttsScriptEn": "Describe your favorite type of music and why you listen to it.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q9",
+    "examId": "opic-mock-a",
+    "order": 9,
+    "type": "past_experience",
+    "ttsScriptEn": "Talk about a memorable performance or concert you attended.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q10",
+    "examId": "opic-mock-a",
+    "order": 10,
+    "type": "survey_topic",
+    "ttsScriptEn": "Describe your exercise habits and how you feel when exercising.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q11",
+    "examId": "opic-mock-a",
+    "order": 11,
+    "type": "comparison",
+    "ttsScriptEn": "Compare how you exercised when you started and how you exercise now.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q12",
+    "examId": "opic-mock-a",
+    "order": 12,
+    "type": "role_play",
+    "ttsScriptEn": "Call a gym and ask about hours, prices, and facilities.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q13",
+    "examId": "opic-mock-a",
+    "order": 13,
+    "type": "problem_solving",
+    "ttsScriptEn": "Your new running shoes have a problem. Call the store and ask for a solution.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q14",
+    "examId": "opic-mock-a",
+    "order": 14,
+    "type": "survey_topic",
+    "ttsScriptEn": "Describe a cafe you often visit and explain why you like it.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  },
+  {
+    "id": "opic-mock-a-q15",
+    "examId": "opic-mock-a",
+    "order": 15,
+    "type": "past_experience",
+    "ttsScriptEn": "Describe a special day you had recently in chronological order.",
+    "prepSeconds": 30,
+    "answerSeconds": 60
+  }
+]

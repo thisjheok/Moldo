@@ -1,0 +1,52 @@
+[
+  {
+    "id": "opic-mock-a",
+    "title": "OPIC 모의고사 A",
+    "tag": "모의고사",
+    "questionCount": 15,
+    "estimatedMinutes": 15,
+    "difficulty": "medium",
+    "mode": "mock",
+    "icon": "document"
+  },
+  {
+    "id": "opic-mock-b",
+    "title": "OPIC 모의고사 B",
+    "tag": "모의고사",
+    "questionCount": 15,
+    "estimatedMinutes": 15,
+    "difficulty": "hard",
+    "mode": "mock",
+    "icon": "document"
+  },
+  {
+    "id": "opic-real-session",
+    "title": "OPIC 실전형 세션",
+    "tag": "실전",
+    "questionCount": 12,
+    "estimatedMinutes": 12,
+    "difficulty": "hard",
+    "mode": "real",
+    "icon": "target"
+  },
+  {
+    "id": "opic-topic-practice",
+    "title": "OPIC 주제별 연습",
+    "tag": "연습",
+    "questionCount": 20,
+    "estimatedMinutes": 20,
+    "difficulty": "easy",
+    "mode": "topic",
+    "icon": "message"
+  },
+  {
+    "id": "opic-mock-c",
+    "title": "OPIC 실전 모의고사 C",
+    "tag": "모의고사",
+    "questionCount": 20,
+    "estimatedMinutes": 20,
+    "difficulty": "hard",
+    "mode": "mock",
+    "icon": "document"
+  }
+]

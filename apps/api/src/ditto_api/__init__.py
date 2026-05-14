@@ -1,0 +1,1 @@
+"""Ditto FastAPI application."""

@@ -3,12 +3,14 @@
   "private": true,
   "packageManager": "pnpm@11.0.9",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "dev": "npm run dev --workspace @repo/web",
     "build": "npm run build --workspace @repo/web",
-    "lint": "npm run lint --workspace @repo/web"
+    "lint": "npm run lint --workspace @repo/web",
+    "typecheck": "pnpm --recursive run typecheck"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
