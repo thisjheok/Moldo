@@ -8,3 +8,9 @@ dist
 coverage
 
 .env
+apps/api/.venv
+__pycache__
+*.pyc
+*.tsbuildinfo
+*.egg-info
+apps/api/.data

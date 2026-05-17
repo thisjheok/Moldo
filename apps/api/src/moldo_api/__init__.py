@@ -1,0 +1,1 @@
+"""Moldo FastAPI application."""

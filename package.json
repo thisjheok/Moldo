@@ -1,5 +1,5 @@
 {
-  "name": "speaking-trainer-monorepo",
+  "name": "moldo-monorepo",
   "private": true,
   "packageManager": "pnpm@11.0.9",
   "workspaces": [
@@ -7,9 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace @repo/web",
-    "build": "npm run build --workspace @repo/web",
-    "lint": "npm run lint --workspace @repo/web",
+    "dev": "npm run dev --workspace @moldo/web",
+    "build": "npm run build --workspace @moldo/web",
+    "lint": "npm run lint --workspace @moldo/web",
     "typecheck": "pnpm --recursive run typecheck"
   },
   "pnpm": {

@@ -1,9 +1,17 @@
 import { getMyProfile, listMyResults } from "../../lib/api";
+import { getServerCookieHeader } from "../../lib/api/server";
 import { ApiErrorState } from "../components/ApiState";
 import { HistoryTable } from "../components/HistoryTable";
 import { SiteHeader } from "../components/SiteHeader";
 
 type MyPageIconName = "chevron" | "user";
+const historiesPerPage = 10;
+
+type MyPageProps = {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+};
 
 function MyPageIcon({ name }: { name: MyPageIconName }) {
   if (name === "chevron") {
@@ -22,10 +30,17 @@ function MyPageIcon({ name }: { name: MyPageIconName }) {
   );
 }
 
-export default async function MyPage() {
+function getPageNumbers(totalPages: number): number[] {
+  return Array.from({ length: totalPages }, (_, index) => index + 1);
+}
+
+export default async function MyPage({ searchParams }: MyPageProps) {
+  const params = await searchParams;
+  const requestedPage = Number(params?.page ?? "1");
+  const cookieHeader = await getServerCookieHeader();
   const [profile, results] = await Promise.all([
-    getMyProfile().catch(() => null),
-    listMyResults().catch(() => null),
+    getMyProfile({ cookieHeader }).catch(() => null),
+    listMyResults({ cookieHeader }).catch(() => null),
   ]);
 
   if (profile === null || results === null) {
@@ -38,6 +53,11 @@ export default async function MyPage() {
       </div>
     );
   }
+
+  const totalPages = Math.ceil(results.length / historiesPerPage);
+  const currentPage = Math.min(Math.max(Number.isFinite(requestedPage) ? requestedPage : 1, 1), totalPages || 1);
+  const pageStartIndex = (currentPage - 1) * historiesPerPage;
+  const pageHistories = results.slice(pageStartIndex, pageStartIndex + historiesPerPage);
 
   return (
     <div className="app-shell">
@@ -66,26 +86,34 @@ export default async function MyPage() {
             <button className="active" type="button" aria-pressed="true">
               응시 기록
             </button>
-            <button type="button" aria-pressed="false">
-              북마크
-            </button>
           </div>
 
-          <HistoryTable histories={results} />
+          <HistoryTable histories={pageHistories} />
 
-          <nav className="mypage-pagination" aria-label="응시 기록 페이지">
-            <button type="button" aria-label="이전 페이지">
-              <MyPageIcon name="chevron" />
-            </button>
-            <a className="active" href="#" aria-current="page">
-              1
-            </a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <button type="button" aria-label="다음 페이지">
-              <MyPageIcon name="chevron" />
-            </button>
-          </nav>
+          {totalPages > 1 ? (
+            <nav className="mypage-pagination" aria-label="응시 기록 페이지">
+              {currentPage > 1 ? (
+                <a href={`/mypage?page=${currentPage - 1}`} aria-label="이전 페이지">
+                  <MyPageIcon name="chevron" />
+                </a>
+              ) : null}
+              {getPageNumbers(totalPages).map((pageNumber) => (
+                <a
+                  className={pageNumber === currentPage ? "active" : undefined}
+                  href={`/mypage?page=${pageNumber}`}
+                  aria-current={pageNumber === currentPage ? "page" : undefined}
+                  key={pageNumber}
+                >
+                  {pageNumber}
+                </a>
+              ))}
+              {currentPage < totalPages ? (
+                <a href={`/mypage?page=${currentPage + 1}`} aria-label="다음 페이지">
+                  <MyPageIcon name="chevron" />
+                </a>
+              ) : null}
+            </nav>
+          ) : null}
         </section>
       </main>
     </div>

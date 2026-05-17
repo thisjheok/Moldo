@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.codex
-    container_name: ditto-codex
+    container_name: moldo-codex
     working_dir: /workspace
     stdin_open: true
     tty: true

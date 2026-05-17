@@ -1,5 +1,5 @@
 {
-  "name": "@repo/web",
+  "name": "@moldo/web",
   "private": true,
   "version": "0.1.0",
   "scripts": {
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/types": "workspace:*",
+    "@moldo/types": "workspace:*",
     "next": "15.3.2",
     "react": "19.1.0",
     "react-dom": "19.1.0"

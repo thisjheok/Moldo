@@ -10,7 +10,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@repo/types':
+      '@moldo/types':
         specifier: workspace:*
         version: link:../../packages/types
       next:

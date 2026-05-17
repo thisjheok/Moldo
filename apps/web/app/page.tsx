@@ -22,7 +22,7 @@ function HomeIcon({ name }: { name: HomeIconName }) {
   );
 }
 
-const examFilters = ["난이도 전체", "문항 수 전체", "예상 시간 전체", "유형 전체"];
+const examFilters = ["난이도 전체", "문항 수 전체", "예상 시간 전체"];
 
 export default async function HomePage() {
   let exams;
@@ -39,8 +39,8 @@ export default async function HomePage() {
 
       <main className="simple-main">
         <section className="simple-hero" aria-labelledby="main-title">
-          <h1 id="main-title">시험형 영어 말하기 연습</h1>
-          <p>실전과 유사한 환경에서 연습하고, AI 피드백으로 말하기 실력을 향상하세요.</p>
+          <h1 id="main-title">영어 말하기 모의고사</h1>
+          <p>실제 응시 흐름과 유사한 환경에서 답변하고, AI 피드백으로 말하기 실력을 점검하세요.</p>
         </section>
 
         <section className="simple-filter-panel" aria-label="시험 검색 및 필터">
@@ -74,13 +74,13 @@ export default async function HomePage() {
       </main>
 
       <footer className="site-footer">
-        <p>© 2024 Ditto. All rights reserved.</p>
+        <p>© 2024 Moldo. All rights reserved.</p>
         <nav aria-label="정책">
           <a href="#">개인정보처리방침</a>
           <a href="#">이용약관</a>
           <a href="#">고객센터</a>
         </nav>
-        <p>이메일 문의: support@dittospeaking.com</p>
+        <p>이메일 문의: support@moldospeaking.com</p>
       </footer>
     </div>
   );

@@ -1,57 +1,13 @@
 [
   {
     "id": "history-1",
-    "resultId": "result-opic-mock-a-20240514",
-    "examId": "opic-mock-a",
-    "examTitle": "OPIC 모의고사 A",
+    "resultId": "result-speaking-mock-1-20240514",
+    "examId": "speaking-mock-1",
+    "examTitle": "말하기 모의고사 1",
     "takenAt": "2024-05-14T14:20:00+09:00",
-    "questionCount": 15,
+    "questionCount": 12,
     "totalScore": 82,
     "maxScore": 100,
     "durationSeconds": 918
-  },
-  {
-    "id": "history-2",
-    "resultId": "result-opic-mock-b-20240510",
-    "examId": "opic-mock-b",
-    "examTitle": "OPIC 모의고사 B",
-    "takenAt": "2024-05-10T10:05:00+09:00",
-    "questionCount": 15,
-    "totalScore": 76,
-    "maxScore": 100,
-    "durationSeconds": 902
-  },
-  {
-    "id": "history-3",
-    "resultId": "result-opic-real-session-20240507",
-    "examId": "opic-real-session",
-    "examTitle": "OPIC 실전형 세션",
-    "takenAt": "2024-05-07T16:30:00+09:00",
-    "questionCount": 12,
-    "totalScore": 88,
-    "maxScore": 100,
-    "durationSeconds": 731
-  },
-  {
-    "id": "history-4",
-    "resultId": "result-opic-mock-a-20240502",
-    "examId": "opic-mock-a",
-    "examTitle": "OPIC 모의고사 A",
-    "takenAt": "2024-05-02T11:15:00+09:00",
-    "questionCount": 15,
-    "totalScore": 70,
-    "maxScore": 100,
-    "durationSeconds": 927
-  },
-  {
-    "id": "history-5",
-    "resultId": "result-opic-mock-b-20240428",
-    "examId": "opic-mock-b",
-    "examTitle": "OPIC 모의고사 B",
-    "takenAt": "2024-04-28T09:40:00+09:00",
-    "questionCount": 15,
-    "totalScore": 65,
-    "maxScore": 100,
-    "durationSeconds": 933
   }
 ]

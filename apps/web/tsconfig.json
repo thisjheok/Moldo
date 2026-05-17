@@ -11,8 +11,8 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@repo/types": ["../../packages/types/src/index.ts"],
-      "@repo/types/*": ["../../packages/types/src/*"]
+      "@moldo/types": ["../../packages/types/src/index.ts"],
+      "@moldo/types/*": ["../../packages/types/src/*"]
     },
     "resolveJsonModule": true,
     "isolatedModules": true,

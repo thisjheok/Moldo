@@ -1,13 +1,18 @@
 [project]
-name = "ditto-api"
+name = "moldo-api"
 version = "0.1.0"
-description = "FastAPI backend for Ditto speaking practice"
+description = "FastAPI backend for Moldo speaking practice"
 requires-python = ">=3.12"
 dependencies = [
   "fastapi>=0.115.0,<1.0.0",
+  "itsdangerous>=2.2.0,<3.0.0",
+  "openai>=2.0.0,<3.0.0",
   "pydantic>=2.8.0,<3.0.0",
   "uvicorn[standard]>=0.30.0,<1.0.0"
 ]
+
+[project.scripts]
+moldo-worker = "moldo_api.worker:main"
 
 [project.optional-dependencies]
 dev = [
@@ -22,4 +27,4 @@ target-version = "py312"
 [tool.mypy]
 python_version = "3.12"
 strict = true
-files = ["src/ditto_api"]
+files = ["src/moldo_api"]

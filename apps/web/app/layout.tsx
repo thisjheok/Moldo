@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ditto",
+  title: "Moldo",
   description: "시험형 영어 말하기 연습 서비스",
 };
 

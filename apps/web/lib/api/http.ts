@@ -4,6 +4,10 @@ type ApiErrorPayload = {
   detail?: string;
 };
 
+export type ApiRequestInit = RequestInit & {
+  cookieHeader?: string;
+};
+
 export class ApiError extends Error {
   status: number;
   payload: unknown;
@@ -17,17 +21,26 @@ export class ApiError extends Error {
 }
 
 async function parseResponseBody(response: Response): Promise<unknown> {
+  if (response.status === 204 || response.status === 205) {
+    return null;
+  }
+
   const contentType = response.headers.get("content-type") ?? "";
+  const body = await response.text();
+
+  if (!body) {
+    return null;
+  }
 
   if (contentType.includes("application/json")) {
-    return response.json();
+    return JSON.parse(body);
   }
 
   if (contentType.startsWith("text/")) {
-    return response.text();
+    return body;
   }
 
-  return null;
+  return body;
 }
 
 function getErrorMessage(status: number, payload: unknown): string {
@@ -42,14 +55,18 @@ function getErrorMessage(status: number, payload: unknown): string {
   return `API request failed with status ${status}.`;
 }
 
-export async function apiRequest<T>(path: string, init?: RequestInit): Promise<T> {
+export async function apiRequest<T>(path: string, init?: ApiRequestInit): Promise<T> {
+  const { cookieHeader, ...requestInit } = init ?? {};
+
   const response = await fetch(`${getApiBaseUrl()}${path}`, {
-    ...init,
+    ...requestInit,
     headers: {
       "Content-Type": "application/json",
-      ...init?.headers,
+      ...(cookieHeader ? { Cookie: cookieHeader } : {}),
+      ...requestInit.headers,
     },
     cache: "no-store",
+    credentials: "include",
   });
 
   const payload = await parseResponseBody(response);

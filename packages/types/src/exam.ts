@@ -1,6 +1,6 @@
 export type ExamDifficulty = "easy" | "medium" | "hard";
 
-export type ExamMode = "mock" | "practice" | "topic" | "real";
+export type ExamMode = "mock";
 
 export type ExamIconName = "document" | "message" | "target";
 
@@ -18,7 +18,7 @@ export type ExamSummary = {
 
 export type QuestionType =
   | "self_intro"
-  | "survey_topic"
+  | "personal_prompt"
   | "role_play"
   | "past_experience"
   | "comparison"

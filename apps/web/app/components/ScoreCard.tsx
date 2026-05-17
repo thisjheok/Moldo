@@ -1,4 +1,4 @@
-import type { ScoreItem } from "@repo/types";
+import type { ScoreItem } from "@moldo/types";
 
 export function ScoreCard({ score }: { score: ScoreItem }) {
   return (

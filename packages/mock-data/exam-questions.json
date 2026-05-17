@@ -1,137 +1,119 @@
 [
   {
-    "id": "opic-mock-a-q1",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q1",
+    "examId": "speaking-mock-1",
     "order": 1,
     "type": "self_intro",
-    "ttsScriptEn": "Please introduce yourself. Include your work or studies and your interests.",
+    "ttsScriptEn": "Let's begin. Please introduce yourself. Talk about what you do, where you spend most of your day, and one interest that is important to you.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q2",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q2",
+    "examId": "speaking-mock-1",
     "order": 2,
-    "type": "survey_topic",
-    "ttsScriptEn": "Describe your home or neighborhood in detail.",
+    "type": "personal_prompt",
+    "ttsScriptEn": "Tell me about the place where you live. Describe the rooms, the atmosphere, and what you usually do there when you have free time.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q3",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q3",
+    "examId": "speaking-mock-1",
     "order": 3,
-    "type": "survey_topic",
-    "ttsScriptEn": "Describe your smartphone habits and what you would like to change.",
-    "prepSeconds": 30,
-    "answerSeconds": 60
-  },
-  {
-    "id": "opic-mock-a-q4",
-    "examId": "opic-mock-a",
-    "order": 4,
     "type": "past_experience",
-    "ttsScriptEn": "Choose a memorable trip and describe what you did there.",
+    "ttsScriptEn": "Think about a memorable moment you had at home. What happened, who was with you, and why do you still remember it?",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q5",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q4",
+    "examId": "speaking-mock-1",
+    "order": 4,
+    "type": "personal_prompt",
+    "ttsScriptEn": "Describe an electronic device you use often. Explain what it looks like, how you use it, and why it is useful in your daily life.",
+    "prepSeconds": 30,
+    "answerSeconds": 90
+  },
+  {
+    "id": "speaking-mock-1-q5",
+    "examId": "speaking-mock-1",
     "order": 5,
     "type": "comparison",
-    "ttsScriptEn": "Compare your leisure activities in the past and now.",
+    "ttsScriptEn": "Compare how you used technology a few years ago with how you use it now. What has changed, and how has that change affected your routine?",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q6",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q6",
+    "examId": "speaking-mock-1",
     "order": 6,
-    "type": "role_play",
-    "ttsScriptEn": "Call a restaurant and ask to change your reservation time.",
+    "type": "personal_prompt",
+    "ttsScriptEn": "Talk about a kind of music you enjoy. Describe when you usually listen to it, how it makes you feel, and one artist or song you like.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q7",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q7",
+    "examId": "speaking-mock-1",
     "order": 7,
-    "type": "problem_solving",
-    "ttsScriptEn": "You will be late to meet a friend. Explain the situation and suggest an alternative.",
+    "type": "past_experience",
+    "ttsScriptEn": "Tell me about a live event, performance, movie, or show that you remember well. Describe where it was, what happened, and what made it memorable.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q8",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q8",
+    "examId": "speaking-mock-1",
     "order": 8,
-    "type": "survey_topic",
-    "ttsScriptEn": "Describe your favorite type of music and why you listen to it.",
+    "type": "personal_prompt",
+    "ttsScriptEn": "Describe an exercise or outdoor activity you do, or would like to do. Explain how often you do it, where you do it, and how you feel afterward.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q9",
-    "examId": "opic-mock-a",
+    "id": "speaking-mock-1-q9",
+    "examId": "speaking-mock-1",
     "order": 9,
-    "type": "past_experience",
-    "ttsScriptEn": "Talk about a memorable performance or concert you attended.",
-    "prepSeconds": 30,
-    "answerSeconds": 60
-  },
-  {
-    "id": "opic-mock-a-q10",
-    "examId": "opic-mock-a",
-    "order": 10,
-    "type": "survey_topic",
-    "ttsScriptEn": "Describe your exercise habits and how you feel when exercising.",
-    "prepSeconds": 30,
-    "answerSeconds": 60
-  },
-  {
-    "id": "opic-mock-a-q11",
-    "examId": "opic-mock-a",
-    "order": 11,
     "type": "comparison",
-    "ttsScriptEn": "Compare how you exercised when you started and how you exercise now.",
+    "ttsScriptEn": "Compare your free-time activities now with the activities you enjoyed when you were younger. What is different, and what has stayed the same?",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q12",
-    "examId": "opic-mock-a",
-    "order": 12,
+    "id": "speaking-mock-1-q10",
+    "examId": "speaking-mock-1",
+    "order": 10,
     "type": "role_play",
-    "ttsScriptEn": "Call a gym and ask about hours, prices, and facilities.",
+    "ttsScriptEn": "I will give you a situation. You want to make a dinner reservation at a restaurant this weekend. Call the restaurant and ask three or four questions about availability, menu options, and seating.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q13",
-    "examId": "opic-mock-a",
-    "order": 13,
+    "id": "speaking-mock-1-q11",
+    "examId": "speaking-mock-1",
+    "order": 11,
     "type": "problem_solving",
-    "ttsScriptEn": "Your new running shoes have a problem. Call the store and ask for a solution.",
+    "ttsScriptEn": "Now you have a problem. You made a reservation, but your schedule suddenly changed. Call the restaurant, explain the problem, and suggest a new time or another solution.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q14",
-    "examId": "opic-mock-a",
-    "order": 14,
-    "type": "survey_topic",
-    "ttsScriptEn": "Describe a cafe you often visit and explain why you like it.",
+    "id": "speaking-mock-1-q12",
+    "examId": "speaking-mock-1",
+    "order": 12,
+    "type": "problem_solving",
+    "ttsScriptEn": "Tell me about a time when a plan changed unexpectedly during a trip, meeting, or personal event. Explain what went wrong, what you did, and what you learned from the experience.",
     "prepSeconds": 30,
-    "answerSeconds": 60
+    "answerSeconds": 90
   },
   {
-    "id": "opic-mock-a-q15",
-    "examId": "opic-mock-a",
-    "order": 15,
-    "type": "past_experience",
-    "ttsScriptEn": "Describe a special day you had recently in chronological order.",
-    "prepSeconds": 30,
-    "answerSeconds": 60
+    "id": "test-speaking-exam-q1",
+    "examId": "test-speaking-exam",
+    "order": 1,
+    "type": "self_intro",
+    "ttsScriptEn": "This is a test question. Please say your name and describe one thing you did today.",
+    "prepSeconds": 5,
+    "answerSeconds": 15
   }
 ]

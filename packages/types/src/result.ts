@@ -1,10 +1,8 @@
 export type ScoreCategory =
-  | "question_relevance"
-  | "delivery"
-  | "fluency"
+  | "relevance"
+  | "coherence"
   | "grammar"
-  | "vocabulary"
-  | "coherence";
+  | "expression";
 
 export type ScoreItem = {
   category: ScoreCategory;
@@ -19,6 +17,7 @@ export type ResultAnswer = {
   questionPrompt: string;
   transcript: string;
   modelAnswer: string;
+  scores: ScoreItem[];
   audioUrl?: string;
   durationSeconds: number;
   modelAnswerAudioUrl?: string;

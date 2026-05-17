@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ExamIconName, ExamSummary } from "@repo/types";
+import type { ExamIconName, ExamSummary } from "@moldo/types";
 import { formatEstimatedMinutes } from "../../utils/formatters";
 
 type ExamCardIconName = ExamIconName | "chevron";
@@ -11,10 +11,7 @@ const difficultyLabels: Record<ExamSummary["difficulty"], string> = {
 };
 
 const modeLabels: Record<ExamSummary["mode"], string> = {
-  mock: "종합",
-  practice: "연습",
-  topic: "주제별",
-  real: "실전",
+  mock: "모의고사",
 };
 
 function ExamCardIcon({ name }: { name: ExamCardIconName }) {

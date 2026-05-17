@@ -74,7 +74,7 @@ Use a single JavaScript/TypeScript monorepo with `pnpm` workspaces.
 ## 3. Naming Conventions
 
 - Directories: kebab-case.
-- Package names: `@repo/<name>`.
+- Package names: `@moldo/<name>`.
 - React components: PascalCase.
 - Hooks: `useXxx`.
 - TypeScript files: kebab-case except React component files, which may use PascalCase if the codebase chooses that consistently.
@@ -197,9 +197,9 @@ Based on the product policy:
 
 The web app must follow [design.md](/workspace/docs/design.md) as the default design source of truth.
 
-- A near-white lavender-tinted background is the default page foundation.
-- The UI uses soft white surfaces, thin lavender borders, and restrained violet gradients for primary actions.
-- Violet/lavender is the primary brand and action color family.
+- A near-white warm sand-tinted background is the default page foundation.
+- The UI uses soft white surfaces, thin warm sand borders, and restrained cream-sand gradients for primary actions.
+- Warm sand/gold-brown is the primary brand and action color family.
 - Prefer dashboard clarity, stable spacing, and fast access to speaking tests over decorative visual effects.
 
 ## 11. First Implementation Milestones

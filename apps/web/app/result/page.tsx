@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getResult } from "../../lib/api";
+import { getServerCookieHeader } from "../../lib/api/server";
 import { ApiErrorState } from "../components/ApiState";
 import { FeedbackCard } from "../components/FeedbackCard";
 import { ResultAnswerCard } from "../components/ResultAnswerCard";
@@ -16,7 +17,7 @@ function ArrowIcon() {
   );
 }
 
-const DEFAULT_RESULT_ID = "result-opic-mock-a-20240514";
+const DEFAULT_RESULT_ID = "result-speaking-mock-1-20240514";
 
 type ResultPageProps = {
   searchParams?: Promise<{
@@ -27,7 +28,8 @@ type ResultPageProps = {
 export default async function ResultPage({ searchParams }: ResultPageProps) {
   const params = await searchParams;
   const resultId = params?.resultId ?? DEFAULT_RESULT_ID;
-  const result = await getResult(resultId).catch(() => null);
+  const cookieHeader = await getServerCookieHeader();
+  const result = await getResult(resultId, { cookieHeader }).catch(() => null);
 
   if (result === null) {
     return (

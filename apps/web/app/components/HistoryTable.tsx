@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ExamHistoryItem } from "@repo/types";
+import type { ExamHistoryItem } from "@moldo/types";
 import { formatDateTime, formatDuration, formatScore } from "../../utils/formatters";
 
 function FeedbackIcon() {

@@ -1,52 +1,24 @@
 [
   {
-    "id": "opic-mock-a",
-    "title": "OPIC 모의고사 A",
-    "tag": "모의고사",
-    "questionCount": 15,
-    "estimatedMinutes": 15,
+    "id": "speaking-mock-1",
+    "title": "말하기 모의고사 1",
+    "tag": "말하기 모의고사",
+    "questionCount": 12,
+    "estimatedMinutes": 24,
     "difficulty": "medium",
     "mode": "mock",
-    "icon": "document"
+    "icon": "document",
+    "description": "실제 시험형 흐름에 맞춰 자기소개, 일상 주제, 경험 설명, 비교, 롤플레이, 문제 해결 문항을 순서대로 연습합니다."
   },
   {
-    "id": "opic-mock-b",
-    "title": "OPIC 모의고사 B",
-    "tag": "모의고사",
-    "questionCount": 15,
-    "estimatedMinutes": 15,
-    "difficulty": "hard",
-    "mode": "mock",
-    "icon": "document"
-  },
-  {
-    "id": "opic-real-session",
-    "title": "OPIC 실전형 세션",
-    "tag": "실전",
-    "questionCount": 12,
-    "estimatedMinutes": 12,
-    "difficulty": "hard",
-    "mode": "real",
-    "icon": "target"
-  },
-  {
-    "id": "opic-topic-practice",
-    "title": "OPIC 주제별 연습",
-    "tag": "연습",
-    "questionCount": 20,
-    "estimatedMinutes": 20,
+    "id": "test-speaking-exam",
+    "title": "테스트용 시험",
+    "tag": "테스트",
+    "questionCount": 1,
+    "estimatedMinutes": 2,
     "difficulty": "easy",
-    "mode": "topic",
-    "icon": "message"
-  },
-  {
-    "id": "opic-mock-c",
-    "title": "OPIC 실전 모의고사 C",
-    "tag": "모의고사",
-    "questionCount": 20,
-    "estimatedMinutes": 20,
-    "difficulty": "hard",
     "mode": "mock",
-    "icon": "document"
+    "icon": "document",
+    "description": "오디오 업로드와 채점 플로우를 빠르게 확인하기 위한 1문항 시험입니다."
   }
 ]
