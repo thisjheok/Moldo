@@ -4,8 +4,8 @@ import type { ExamAttempt, ExamQuestion } from "@moldo/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import type { MouseEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import avaImage from "../assets/ava.png";
 import { getAttempt, submitAttempt, uploadAttemptAnswerAudio } from "../../lib/api";
 import { formatDuration } from "../../utils/formatters";
 
@@ -31,6 +31,8 @@ type ExamIconName =
 type QuestionAnswerState = {
   hasPlayed: boolean;
   playbackCount: number;
+  playbackSeconds: number;
+  playbackDurationSeconds: number;
   isReplayAvailable: boolean;
   isPlaying: boolean;
   isRecording: boolean;
@@ -41,11 +43,14 @@ type QuestionAnswerState = {
 
 const maxQuestionPlaybackCount = 2;
 const maxGradableAnswerSeconds = 120;
+const exitConfirmMessage = "현재 세션을 나가겠습니까?\n지금까지 한 내용은 채점되지 않습니다.";
 
 function createInitialQuestionState(questions: ExamQuestion[]): QuestionAnswerState[] {
   return questions.map(() => ({
     hasPlayed: false,
     playbackCount: 0,
+    playbackSeconds: 0,
+    playbackDurationSeconds: 0,
     isReplayAvailable: false,
     isPlaying: false,
     isRecording: false,
@@ -207,9 +212,12 @@ function ExamIcon({ name }: { name: ExamIconName }) {
 
 export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
   const router = useRouter();
+  const isAttemptWaitingForResult = attempt.status === "submitted" || attempt.status === "grading";
   const [currentQuestion, setCurrentQuestion] = useState(attempt.currentQuestionOrder);
-  const [isGrading, setIsGrading] = useState(false);
-  const [submittedAttemptId, setSubmittedAttemptId] = useState<string | null>(null);
+  const [isGrading, setIsGrading] = useState(isAttemptWaitingForResult);
+  const [submittedAttemptId, setSubmittedAttemptId] = useState<string | null>(
+    isAttemptWaitingForResult ? attempt.id : null,
+  );
   const [isSavingAnswer, setIsSavingAnswer] = useState(false);
   const [questionStates, setQuestionStates] = useState<QuestionAnswerState[]>(() =>
     createInitialQuestionState(questions),
@@ -221,7 +229,9 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
   const recordingStartedAtRef = useRef<number | null>(null);
   const discardedRecordersRef = useRef<WeakSet<MediaRecorder>>(new WeakSet());
   const pendingAfterSaveRef = useRef<(() => void) | null>(null);
+  const isLeavingExamRef = useRef(false);
   const playbackSessionRef = useRef(0);
+  const questionAudioRef = useRef<HTMLAudioElement | null>(null);
   const replayWindowTimerRef = useRef<number | null>(null);
   const femaleVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
@@ -230,6 +240,21 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
   const currentQuestionData = questions[safeCurrentQuestionIndex] ?? questions[0];
   const currentQuestionState = questionStates[safeCurrentQuestionIndex] ?? questionStates[0];
   const questionNumbers = questions.map((question) => question.order);
+  const isExamCompleted = questionStates.every((questionState) => questionState.isCompleted);
+  const shouldConfirmExamExit = !isExamCompleted && !isGrading;
+
+  const stopQuestionAudio = useCallback(() => {
+    const audio = questionAudioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+    questionAudioRef.current = null;
+  }, []);
 
   const clearReplayWindowTimer = useCallback(() => {
     if (replayWindowTimerRef.current !== null) {
@@ -414,6 +439,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
 
     return () => {
       playbackSessionRef.current += 1;
+      stopQuestionAudio();
       if (recorderRef.current && recorderRef.current.state !== "inactive") {
         recorderRef.current.stop();
       }
@@ -421,7 +447,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
       window.speechSynthesis?.cancel();
       window.speechSynthesis?.removeEventListener("voiceschanged", loadFemaleVoice);
     };
-  }, []);
+  }, [stopQuestionAudio]);
 
   useEffect(() => {
     if (!currentQuestionState?.isRecording) {
@@ -490,6 +516,8 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
               isReplayAvailable: false,
               isPlaying: true,
               isRecording: false,
+              playbackSeconds: 0,
+              playbackDurationSeconds: questionState.playbackDurationSeconds,
               recordingSeconds: isReplayingDuringRecording ? 0 : questionState.recordingSeconds,
               audioBlob: isReplayingDuringRecording ? null : questionState.audioBlob,
             }
@@ -499,6 +527,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
 
     const sessionId = playbackSessionRef.current + 1;
     playbackSessionRef.current = sessionId;
+    stopQuestionAudio();
 
     const completePlayback = () => {
       const completedPlaybackCount = Math.min(playbackCount + 1, maxQuestionPlaybackCount);
@@ -514,6 +543,10 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
               ...questionState,
               hasPlayed: true,
               playbackCount: completedPlaybackCount,
+              playbackSeconds:
+                questionState.playbackDurationSeconds > 0
+                  ? questionState.playbackDurationSeconds
+                  : questionState.playbackSeconds,
               isReplayAvailable: completedPlaybackCount === 1,
               isPlaying: false,
             };
@@ -537,6 +570,86 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
 
       startRecording({ keepReplayAvailable: true, resetRemainingSeconds: true });
     };
+
+    if (currentQuestionData.ttsAudioUrl) {
+      const audio = new Audio(currentQuestionData.ttsAudioUrl);
+      questionAudioRef.current = audio;
+      audio.preload = "auto";
+
+      audio.onloadedmetadata = () => {
+        if (playbackSessionRef.current !== sessionId || !Number.isFinite(audio.duration)) {
+          return;
+        }
+
+        setQuestionStates((states) =>
+          states.map((questionState, index) =>
+            index === safeCurrentQuestionIndex
+              ? { ...questionState, playbackDurationSeconds: audio.duration }
+              : questionState,
+          ),
+        );
+      };
+
+      audio.ontimeupdate = () => {
+        if (playbackSessionRef.current !== sessionId) {
+          return;
+        }
+
+        setQuestionStates((states) =>
+          states.map((questionState, index) =>
+            index === safeCurrentQuestionIndex
+              ? {
+                  ...questionState,
+                  playbackSeconds: audio.currentTime,
+                  playbackDurationSeconds:
+                    Number.isFinite(audio.duration) && audio.duration > 0
+                      ? audio.duration
+                      : questionState.playbackDurationSeconds,
+                }
+              : questionState,
+          ),
+        );
+      };
+
+      audio.onended = () => {
+        if (playbackSessionRef.current !== sessionId) {
+          return;
+        }
+
+        questionAudioRef.current = null;
+        completePlayback();
+      };
+
+      audio.onerror = () => {
+        if (playbackSessionRef.current !== sessionId) {
+          return;
+        }
+
+        questionAudioRef.current = null;
+        setMicrophoneError("문항 오디오를 재생하지 못했습니다. 네트워크나 파일 경로를 확인해 주세요.");
+        setQuestionStates((states) =>
+          states.map((questionState, index) =>
+            index === safeCurrentQuestionIndex ? { ...questionState, isPlaying: false } : questionState,
+          ),
+        );
+      };
+
+      void audio.play().catch(() => {
+        if (playbackSessionRef.current !== sessionId) {
+          return;
+        }
+
+        questionAudioRef.current = null;
+        setMicrophoneError("문항 오디오 재생을 시작하지 못했습니다. 다시 눌러 주세요.");
+        setQuestionStates((states) =>
+          states.map((questionState, index) =>
+            index === safeCurrentQuestionIndex ? { ...questionState, isPlaying: false } : questionState,
+          ),
+        );
+      });
+
+      return;
+    }
 
     if (!("speechSynthesis" in window)) {
       const timerId = globalThis.setTimeout(() => {
@@ -586,6 +699,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
   }, [
     currentQuestionData.prepSeconds,
     currentQuestionData.ttsScriptEn,
+    currentQuestionData.ttsAudioUrl,
     clearReplayWindowTimer,
     currentQuestionState?.isCompleted,
     currentQuestionState?.isReplayAvailable,
@@ -594,17 +708,20 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
     currentQuestionState?.isRecording,
     safeCurrentQuestionIndex,
     startRecording,
+    stopQuestionAudio,
   ]);
 
   async function submitCurrentAttempt() {
     playbackSessionRef.current += 1;
     clearReplayWindowTimer();
+    stopQuestionAudio();
     window.speechSynthesis?.cancel();
     setIsGrading(true);
     setMicrophoneError("");
 
     try {
       await submitAttempt(attempt.id);
+      router.replace(`/exam?attemptId=${attempt.id}`);
       setSubmittedAttemptId(attempt.id);
     } catch {
       setIsGrading(false);
@@ -621,6 +738,90 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
 
     await submitCurrentAttempt();
   }
+
+  const discardCurrentSessionWork = useCallback(() => {
+    playbackSessionRef.current += 1;
+    clearReplayWindowTimer();
+    stopQuestionAudio();
+    window.speechSynthesis?.cancel();
+    pendingAfterSaveRef.current = null;
+
+    const recorder = recorderRef.current;
+    if (recorder && recorder.state !== "inactive") {
+      discardedRecordersRef.current.add(recorder);
+      recorder.stop();
+    }
+
+    mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+  }, [clearReplayWindowTimer, stopQuestionAudio]);
+
+  const confirmLeaveExam = useCallback((exitAction: () => void): boolean => {
+    if (!shouldConfirmExamExit) {
+      exitAction();
+      return true;
+    }
+
+    if (!window.confirm(exitConfirmMessage)) {
+      return false;
+    }
+
+    discardCurrentSessionWork();
+    isLeavingExamRef.current = true;
+    exitAction();
+    return true;
+  }, [discardCurrentSessionWork, shouldConfirmExamExit]);
+
+  function handleBrandClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!shouldConfirmExamExit) {
+      return;
+    }
+
+    event.preventDefault();
+    confirmLeaveExam(() => router.push("/"));
+  }
+
+  useEffect(() => {
+    if (!shouldConfirmExamExit) {
+      return;
+    }
+
+    function handleBeforeUnload(event: BeforeUnloadEvent) {
+      if (isLeavingExamRef.current) {
+        return;
+      }
+
+      event.preventDefault();
+      event.returnValue = exitConfirmMessage;
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [shouldConfirmExamExit]);
+
+  useEffect(() => {
+    if (!shouldConfirmExamExit) {
+      return;
+    }
+
+    window.history.pushState({ moldoExamGuard: true }, "", window.location.href);
+
+    function handlePopState() {
+      if (isLeavingExamRef.current) {
+        return;
+      }
+
+      const didLeave = confirmLeaveExam(() => window.history.back());
+
+      if (!didLeave) {
+        window.history.pushState({ moldoExamGuard: true }, "", window.location.href);
+      }
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [confirmLeaveExam, shouldConfirmExamExit]);
 
   useEffect(() => {
     if (!isGrading || !submittedAttemptId) {
@@ -639,7 +840,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
         }
 
         if (latestAttempt.status === "completed" && latestAttempt.resultId) {
-          router.push(`/result?resultId=${latestAttempt.resultId}`);
+          router.replace(`/result?resultId=${latestAttempt.resultId}`);
           return;
         }
 
@@ -665,7 +866,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
   }, [isGrading, router, submittedAttemptId]);
 
   function handleNextQuestion() {
-    if (isSavingAnswer) {
+    if (isSavingAnswer || currentQuestionState?.isPlaying) {
       return;
     }
 
@@ -690,18 +891,25 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
     setCurrentQuestion(questions[safeCurrentQuestionIndex + 1]?.order ?? currentQuestion);
   }
 
+  const playbackSeconds = Math.max(0, currentQuestionState?.playbackSeconds ?? 0);
+  const playbackDurationSeconds = Math.max(0, currentQuestionState?.playbackDurationSeconds ?? 0);
+  const playbackProgressPercent =
+    playbackDurationSeconds > 0
+      ? Math.min((playbackSeconds / playbackDurationSeconds) * 100, 100)
+      : 0;
+  const playbackCurrentLabel = formatDuration(Math.floor(playbackSeconds), { padMinutes: true });
+  const playbackDurationLabel =
+    playbackDurationSeconds > 0
+      ? formatDuration(Math.ceil(playbackDurationSeconds), { padMinutes: true })
+      : "00:00";
+
   return (
     <div className="exam-shell">
       <header className="exam-topbar">
-        <Link className="exam-brand" href="/" aria-label="Moldo 홈">
-          Moldo
+        <Link className="exam-brand" href="/" aria-label="Moldo 홈" onClick={handleBrandClick}>
+          <img className="exam-brand-logo" src="/logo.png" alt="" aria-hidden="true" />
+          <span>Moldo</span>
         </Link>
-
-        <div className="exam-status">
-          <button className="exam-end-button" type="button" onClick={() => void finishExam()} disabled={isSavingAnswer}>
-            시험 종료
-          </button>
-        </div>
       </header>
 
       {isGrading ? (
@@ -753,15 +961,30 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
       ) : (
         <main className="exam-workspace opic-exam-workspace">
           <h1 className="opic-question-heading">
-            Question {currentQuestion} of {questions.length}
+            <span>Question {currentQuestion} of {questions.length}</span>
+            {currentQuestionState?.isRecording ? (
+              <span className="recording-status-badge" role="status" aria-live="polite">
+                <span aria-hidden="true" />
+                <strong>Recording</strong>
+              </span>
+            ) : null}
           </h1>
 
           <section className="stimulus-panel opic-stimulus-panel" aria-label="Ava">
             <div className="stimulus-placeholder" aria-label="이미지 지문 영역">
-              <Image className="stimulus-image" src={avaImage} alt="시험관" priority sizes="(max-width: 1024px) 100vw, 50vw" />
+              <Image
+                className="stimulus-image"
+                src="/ava.png"
+                alt="시험관"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                width={1254}
+                height={1254}
+              />
             </div>
 
             <div className="audio-section" aria-label="지문 재생">
+              <p className="audio-instruction">재생 버튼을 눌러 시험 발문 듣기</p>
               <div className="audio-player" aria-label="지문 오디오 플레이어">
                 <button
                   className="audio-play-button"
@@ -779,11 +1002,18 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
                 >
                   <ExamIcon name="play" />
                 </button>
-                <time>0:00</time>
-                <div className="audio-track" aria-hidden="true">
-                  <span style={{ width: `${((currentQuestionState?.playbackCount ?? 0) / maxQuestionPlaybackCount) * 100}%` }} />
+                <time>{playbackCurrentLabel}</time>
+                <div
+                  className="audio-track"
+                  role="progressbar"
+                  aria-label="문항 오디오 재생 진행률"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(playbackProgressPercent)}
+                >
+                  <span style={{ width: `${playbackProgressPercent}%` }} />
                 </div>
-                <time>{formatDuration(currentQuestionData.prepSeconds, { padMinutes: true })}</time>
+                <time>{playbackDurationLabel}</time>
                 <button className="audio-volume-button" type="button" aria-label="음량">
                   <ExamIcon name="volume" />
                 </button>
@@ -834,7 +1064,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
               className="button primary next-question-button"
               type="button"
               onClick={handleNextQuestion}
-              disabled={isSavingAnswer}
+              disabled={isSavingAnswer || currentQuestionState?.isPlaying}
             >
               {safeCurrentQuestionIndex === questions.length - 1 ? "채점하기" : "다음 문항"}
               <ExamIcon name="chevron" />
@@ -846,6 +1076,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
           </span>
         </main>
       )}
+
     </div>
   );
 }

@@ -10,6 +10,7 @@
     "dev": "npm run dev --workspace @moldo/web",
     "build": "npm run build --workspace @moldo/web",
     "lint": "npm run lint --workspace @moldo/web",
+    "generate:question-tts": "node scripts/generate-question-tts.mjs",
     "sync:exam-data": "node scripts/sync-exam-data.mjs",
     "typecheck": "pnpm --recursive run typecheck"
   },

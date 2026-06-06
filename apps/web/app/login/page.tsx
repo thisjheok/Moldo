@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, Suspense, useState } from "react";
 import { login } from "../../lib/api";
@@ -20,11 +19,13 @@ function LoginForm() {
   const [email, setEmail] = useState("hong@example.com");
   const [password, setPassword] = useState("password");
   const [error, setError] = useState("");
+  const [helperMessage, setHelperMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setHelperMessage("");
     setIsSubmitting(true);
 
     try {
@@ -38,6 +39,11 @@ function LoginForm() {
     }
   }
 
+  function handleUnavailableAction(actionName: string) {
+    setError("");
+    setHelperMessage(`${actionName} 기능은 준비 중입니다.`);
+  }
+
   return (
     <div className="app-shell">
       <SiteHeader />
@@ -46,7 +52,7 @@ function LoginForm() {
         <form className="login-panel" onSubmit={handleSubmit}>
           <div className="login-heading">
             <h1>로그인</h1>
-            <p>응시 기록과 결과를 저장하려면 로그인하세요.</p>
+            <p>로그인 하고 Moldo를 사용해보세요.</p>
           </div>
 
           <label className="login-field">
@@ -73,14 +79,20 @@ function LoginForm() {
           </label>
 
           {error ? <p className="login-error">{error}</p> : null}
+          {helperMessage ? <p className="login-helper-message">{helperMessage}</p> : null}
 
           <button className="login-submit" disabled={isSubmitting} type="submit">
             {isSubmitting ? "로그인 중" : "로그인"}
           </button>
 
-          <Link className="login-secondary-link" href="/">
-            시험 목록으로 돌아가기
-          </Link>
+          <div className="login-support-actions" aria-label="계정 지원">
+            <button type="button" onClick={() => handleUnavailableAction("회원가입")}>
+              회원가입
+            </button>
+            <button type="button" onClick={() => handleUnavailableAction("비밀번호 찾기")}>
+              비밀번호 찾기
+            </button>
+          </div>
         </form>
       </main>
     </div>
@@ -96,7 +108,7 @@ function LoginShell() {
         <div className="login-panel" aria-busy="true">
           <div className="login-heading">
             <h1>로그인</h1>
-            <p>로그인 화면을 불러오는 중입니다.</p>
+            <p>로그인 하고 Moldo를 사용해보세요.</p>
           </div>
         </div>
       </main>

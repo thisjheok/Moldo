@@ -50,8 +50,8 @@ export function listExams(): Promise<ExamSummary[]> {
   return apiRequest<ExamSummary[]>("/exams");
 }
 
-export function getExam(examId: string): Promise<ExamSummary> {
-  return apiRequest<ExamSummary>(`/exams/${examId}`);
+export function getExam(examId: string, init?: ApiRequestInit): Promise<ExamSummary> {
+  return apiRequest<ExamSummary>(`/exams/${examId}`, init);
 }
 
 export function getExamQuestions(examId: string): Promise<ExamQuestion[]> {

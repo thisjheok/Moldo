@@ -96,7 +96,6 @@ function buildExamSet(fileName) {
       tag: "OPIc 모의고사",
       questionCount: questions.length,
       estimatedMinutes: Math.ceil((questions.length * (DEFAULT_PREP_SECONDS + DEFAULT_ANSWER_SECONDS)) / 60),
-      difficulty: "medium",
       mode: "mock",
       icon: "document",
       description: "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다.",
@@ -120,13 +119,28 @@ const generatedSets = readdirSync(testsDir)
 
 const existingExams = readJson(examsPath);
 const existingQuestions = readJson(questionsPath);
+const existingQuestionsById = new Map(existingQuestions.map((question) => [question.id, question]));
 
 const preservedExams = existingExams.filter((exam) => !exam.id.startsWith(GENERATED_EXAM_ID_PREFIX));
 const preservedQuestions = existingQuestions.filter(
   (question) => !question.examId.startsWith(GENERATED_EXAM_ID_PREFIX),
 );
+const generatedQuestions = generatedSets.flatMap((set) =>
+  set.questions.map((question) => {
+    const existingQuestion = existingQuestionsById.get(question.id);
+
+    if (existingQuestion?.ttsAudioUrl && existingQuestion.ttsScriptEn === question.ttsScriptEn) {
+      return {
+        ...question,
+        ttsAudioUrl: existingQuestion.ttsAudioUrl,
+      };
+    }
+
+    return question;
+  }),
+);
 
 writeJson(examsPath, [...preservedExams, ...generatedSets.map((set) => set.exam)]);
-writeJson(questionsPath, [...preservedQuestions, ...generatedSets.flatMap((set) => set.questions)]);
+writeJson(questionsPath, [...preservedQuestions, ...generatedQuestions]);
 
 console.log(`Synced ${generatedSets.length} OPIc exam sets from ${testsDir}`);

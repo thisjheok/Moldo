@@ -1,22 +1,10 @@
 [
   {
-    "id": "speaking-mock-1",
-    "title": "말하기 모의고사 1",
-    "tag": "말하기 모의고사",
-    "questionCount": 12,
-    "estimatedMinutes": 24,
-    "difficulty": "medium",
-    "mode": "mock",
-    "icon": "document",
-    "description": "실제 시험형 흐름에 맞춰 자기소개, 일상 주제, 경험 설명, 비교, 롤플레이, 문제 해결 문항을 순서대로 연습합니다."
-  },
-  {
     "id": "test-speaking-exam",
     "title": "테스트용 시험",
     "tag": "테스트",
     "questionCount": 1,
     "estimatedMinutes": 2,
-    "difficulty": "easy",
     "mode": "mock",
     "icon": "document",
     "description": "오디오 업로드와 채점 플로우를 빠르게 확인하기 위한 1문항 시험입니다."
@@ -27,7 +15,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."
@@ -38,7 +25,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."
@@ -49,7 +35,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."
@@ -60,7 +45,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."
@@ -71,7 +55,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."
@@ -82,7 +65,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."
@@ -93,7 +75,6 @@
     "tag": "OPIc 모의고사",
     "questionCount": 15,
     "estimatedMinutes": 30,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "OPIc 인터뷰 흐름에 맞춰 자기소개, 주제 설명, 경험, 비교, 롤플레이, 문제 해결 문항을 연습합니다."

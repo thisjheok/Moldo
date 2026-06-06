@@ -5,15 +5,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getAuthSession, logout } from "../../lib/api";
 
-function UserIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="8" r="4" />
-      <path d="M5 21a7 7 0 0 1 14 0" />
-    </svg>
-  );
-}
-
 export function SiteHeader() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -61,6 +52,7 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <Link className="brand" href="/" aria-label="Moldo 홈">
+        <img className="brand-logo" src="/logo.png" alt="" aria-hidden="true" />
         <span className="brand-name">Moldo</span>
       </Link>
 
@@ -79,10 +71,7 @@ export function SiteHeader() {
             로그인
           </Link>
         )}
-        <Link className="account-button" href="/mypage">
-          <span className="account-avatar">
-            <UserIcon />
-          </span>
+        <Link className="account-button" href={isAuthLoaded && isAuthenticated ? "/mypage" : "/login?next=/mypage"}>
           <span>내 정보</span>
         </Link>
       </nav>

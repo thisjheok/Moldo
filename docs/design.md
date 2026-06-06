@@ -211,7 +211,6 @@ Use a 4px base scale.
 - Search input spans most of the panel width.
 - `필터 초기화` is a secondary bordered button.
 - Filters use compact select controls in a row:
-  - `난이도`
   - `문항 수`
   - `예상 시간`
   - `유형`
@@ -229,7 +228,6 @@ Use a 4px base scale.
   - small category badge
   - question count
   - estimated time
-  - difficulty
   - type
   - gradient `시작하기` button
 - Rows should not look like oversized cards; they are dense list items.

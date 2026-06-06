@@ -144,7 +144,6 @@ Request body:
     "tag": "말하기 모의고사",
     "questionCount": 12,
     "estimatedMinutes": 24,
-    "difficulty": "medium",
     "mode": "mock",
     "icon": "document",
     "description": "실제 시험형 흐름에 맞춰 자기소개, 일상 주제, 경험 설명, 비교, 롤플레이, 문제 해결 문항을 순서대로 연습합니다."
@@ -165,7 +164,6 @@ Request body:
   "tag": "말하기 모의고사",
   "questionCount": 12,
   "estimatedMinutes": 24,
-  "difficulty": "medium",
   "mode": "mock",
   "icon": "document",
   "description": "실제 시험형 흐름에 맞춰 자기소개, 일상 주제, 경험 설명, 비교, 롤플레이, 문제 해결 문항을 순서대로 연습합니다."

@@ -1,5 +1,3 @@
-export type ExamDifficulty = "easy" | "medium" | "hard";
-
 export type ExamMode = "mock";
 
 export type ExamIconName = "document" | "message" | "target";
@@ -10,7 +8,6 @@ export type ExamSummary = {
   tag: string;
   questionCount: number;
   estimatedMinutes: number;
-  difficulty: ExamDifficulty;
   mode: ExamMode;
   icon: ExamIconName;
   description?: string;
@@ -30,6 +27,7 @@ export type ExamQuestion = {
   order: number;
   type: QuestionType;
   ttsScriptEn: string;
+  ttsAudioUrl?: string;
   prepSeconds: number;
   answerSeconds: number;
 };

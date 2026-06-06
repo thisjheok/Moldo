@@ -8,6 +8,10 @@ export function getApiBaseUrl(): string {
   }
 
   if (process.env.NODE_ENV !== "production") {
+    if (typeof window !== "undefined") {
+      return `${window.location.protocol}//${window.location.hostname}:8000`;
+    }
+
     return DEFAULT_LOCAL_API_BASE_URL;
   }
 

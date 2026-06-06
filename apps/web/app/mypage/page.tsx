@@ -1,4 +1,5 @@
-import { getMyProfile, listMyResults } from "../../lib/api";
+import { redirect } from "next/navigation";
+import { getAuthSession, getMyProfile, listMyResults } from "../../lib/api";
 import { getServerCookieHeader } from "../../lib/api/server";
 import { ApiErrorState } from "../components/ApiState";
 import { HistoryTable } from "../components/HistoryTable";
@@ -38,6 +39,12 @@ export default async function MyPage({ searchParams }: MyPageProps) {
   const params = await searchParams;
   const requestedPage = Number(params?.page ?? "1");
   const cookieHeader = await getServerCookieHeader();
+  const authSession = await getAuthSession({ cookieHeader }).catch(() => null);
+
+  if (authSession === null) {
+    redirect("/login?next=/mypage");
+  }
+
   const [profile, results] = await Promise.all([
     getMyProfile({ cookieHeader }).catch(() => null),
     listMyResults({ cookieHeader }).catch(() => null),

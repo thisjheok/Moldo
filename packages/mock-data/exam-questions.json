@@ -1,120 +1,13 @@
 [
   {
-    "id": "speaking-mock-1-q1",
-    "examId": "speaking-mock-1",
-    "order": 1,
-    "type": "self_intro",
-    "ttsScriptEn": "Let's begin. Please introduce yourself. Talk about what you do, where you spend most of your day, and one interest that is important to you.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q2",
-    "examId": "speaking-mock-1",
-    "order": 2,
-    "type": "personal_prompt",
-    "ttsScriptEn": "Tell me about the place where you live. Describe the rooms, the atmosphere, and what you usually do there when you have free time.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q3",
-    "examId": "speaking-mock-1",
-    "order": 3,
-    "type": "past_experience",
-    "ttsScriptEn": "Think about a memorable moment you had at home. What happened, who was with you, and why do you still remember it?",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q4",
-    "examId": "speaking-mock-1",
-    "order": 4,
-    "type": "personal_prompt",
-    "ttsScriptEn": "Describe an electronic device you use often. Explain what it looks like, how you use it, and why it is useful in your daily life.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q5",
-    "examId": "speaking-mock-1",
-    "order": 5,
-    "type": "comparison",
-    "ttsScriptEn": "Compare how you used technology a few years ago with how you use it now. What has changed, and how has that change affected your routine?",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q6",
-    "examId": "speaking-mock-1",
-    "order": 6,
-    "type": "personal_prompt",
-    "ttsScriptEn": "Talk about a kind of music you enjoy. Describe when you usually listen to it, how it makes you feel, and one artist or song you like.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q7",
-    "examId": "speaking-mock-1",
-    "order": 7,
-    "type": "past_experience",
-    "ttsScriptEn": "Tell me about a live event, performance, movie, or show that you remember well. Describe where it was, what happened, and what made it memorable.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q8",
-    "examId": "speaking-mock-1",
-    "order": 8,
-    "type": "personal_prompt",
-    "ttsScriptEn": "Describe an exercise or outdoor activity you do, or would like to do. Explain how often you do it, where you do it, and how you feel afterward.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q9",
-    "examId": "speaking-mock-1",
-    "order": 9,
-    "type": "comparison",
-    "ttsScriptEn": "Compare your free-time activities now with the activities you enjoyed when you were younger. What is different, and what has stayed the same?",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q10",
-    "examId": "speaking-mock-1",
-    "order": 10,
-    "type": "role_play",
-    "ttsScriptEn": "I will give you a situation. You want to make a dinner reservation at a restaurant this weekend. Call the restaurant and ask three or four questions about availability, menu options, and seating.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q11",
-    "examId": "speaking-mock-1",
-    "order": 11,
-    "type": "problem_solving",
-    "ttsScriptEn": "Now you have a problem. You made a reservation, but your schedule suddenly changed. Call the restaurant, explain the problem, and suggest a new time or another solution.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
-    "id": "speaking-mock-1-q12",
-    "examId": "speaking-mock-1",
-    "order": 12,
-    "type": "problem_solving",
-    "ttsScriptEn": "Tell me about a time when a plan changed unexpectedly during a trip, meeting, or personal event. Explain what went wrong, what you did, and what you learned from the experience.",
-    "prepSeconds": 30,
-    "answerSeconds": 90
-  },
-  {
     "id": "test-speaking-exam-q1",
     "examId": "test-speaking-exam",
     "order": 1,
     "type": "self_intro",
     "ttsScriptEn": "This is a test question. Please say your name and describe one thing you did today.",
     "prepSeconds": 5,
-    "answerSeconds": 15
+    "answerSeconds": 15,
+    "ttsAudioUrl": "/tts/questions/nova/test-speaking-exam-q1-55461430e6fe.mp3"
   },
   {
     "id": "opic-set-001-q01",
@@ -123,7 +16,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-001-q02",
@@ -132,7 +26,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What is the weather like in your country? Tell me about the seasons and the weather people usually experience during each season.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q02-9f7390b9df6f.mp3"
   },
   {
     "id": "opic-set-001-q03",
@@ -141,7 +36,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "How is the weather today where you are? What is happening now, and how does the weather affect your plans for the day?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q03-cf3847599c5f.mp3"
   },
   {
     "id": "opic-set-001-q04",
@@ -150,7 +46,8 @@
     "type": "comparison",
     "ttsScriptEn": "Has the weather in your country changed over time? Was the weather different when you were younger? Tell me about the changes in detail.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q04-a68d06d293fd.mp3"
   },
   {
     "id": "opic-set-001-q05",
@@ -159,7 +56,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "You indicated in the survey that you enjoy shopping. Tell me about the stores or shopping areas in your country. What are they like?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q05-85106846f1b0.mp3"
   },
   {
     "id": "opic-set-001-q06",
@@ -168,7 +66,8 @@
     "type": "past_experience",
     "ttsScriptEn": "When was the last time you went shopping? Where did you go? Who did you go with? What did you buy?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q06-7d65cf343cf1.mp3"
   },
   {
     "id": "opic-set-001-q07",
@@ -177,7 +76,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Have you ever had a problem while shopping? For example, you may have bought the wrong item, received poor service, or had trouble returning something. Tell me what happened and how you handled it.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q07-9cc9d6ba0aae.mp3"
   },
   {
     "id": "opic-set-001-q08",
@@ -186,7 +86,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "I would like to know about exercise or physical activities in your country. What kinds of activities are popular, and where do people usually do them?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q08-c52d07a37ad4.mp3"
   },
   {
     "id": "opic-set-001-q09",
@@ -195,7 +96,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kind of exercise do you like to do? How often do you do it, and what do you enjoy about it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q09-e59edd854850.mp3"
   },
   {
     "id": "opic-set-001-q10",
@@ -204,7 +106,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a memorable experience you had while exercising or playing a sport. Where were you? Who were you with? What made the experience memorable?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q10-216206238d1c.mp3"
   },
   {
     "id": "opic-set-001-q11",
@@ -213,7 +116,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You want to join a fitness center near your home. Call the fitness center and ask three or four questions about the facilities, schedule, and membership fees.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q11-c592d5a2c84c.mp3"
   },
   {
     "id": "opic-set-001-q12",
@@ -222,7 +126,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. You signed up for a fitness class, but your schedule suddenly changed and you cannot attend the class. Call the fitness center, explain the situation, and suggest two or three possible solutions.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q12-09da6d82dd76.mp3"
   },
   {
     "id": "opic-set-001-q13",
@@ -231,7 +136,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever had to change or cancel a class, appointment, or reservation? Explain what happened and what you did.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q13-197b3f113bc0.mp3"
   },
   {
     "id": "opic-set-001-q14",
@@ -240,7 +146,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about the music people in your country enjoy. What kinds of music are popular, and when do people usually listen to music?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q14-f899fa0a87b6.mp3"
   },
   {
     "id": "opic-set-001-q15",
@@ -249,7 +156,8 @@
     "type": "role_play",
     "ttsScriptEn": "I enjoy listening to music, too. Ask me three or four questions about the kind of music I like, when I listen to music, and whether I go to concerts.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-001-q15-ba25c49e56d7.mp3"
   },
   {
     "id": "opic-set-002-q01",
@@ -258,7 +166,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-002-q02",
@@ -267,7 +176,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about transportation in your country. What kinds of transportation do people usually use?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q02-bd9c769a7987.mp3"
   },
   {
     "id": "opic-set-002-q03",
@@ -276,7 +186,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kind of transportation do you usually use? Where do you go, and why do you use that type of transportation?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q03-94c1fe608e6e.mp3"
   },
   {
     "id": "opic-set-002-q04",
@@ -285,7 +196,8 @@
     "type": "comparison",
     "ttsScriptEn": "How has transportation changed in your country over time? Do you think it is more convenient now than before?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q04-bf0990493e2a.mp3"
   },
   {
     "id": "opic-set-002-q05",
@@ -294,7 +206,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "I would like to know about your house. What does it look like? What types of rooms does it have?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q05-a77d87c5f464.mp3"
   },
   {
     "id": "opic-set-002-q06",
@@ -303,7 +216,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What activities do you usually do at home? What do you do on weekdays, and what do you do on weekends?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q06-b4ba518b06fb.mp3"
   },
   {
     "id": "opic-set-002-q07",
@@ -312,7 +226,8 @@
     "type": "comparison",
     "ttsScriptEn": "Tell me about the house you lived in when you were a child. How was it different from the house you live in now?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q07-be25013e8c0b.mp3"
   },
   {
     "id": "opic-set-002-q08",
@@ -321,7 +236,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "You indicated in the survey that you enjoy traveling domestically. Tell me about a place in your country that you like to visit.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q08-c2ebe26ffdd4.mp3"
   },
   {
     "id": "opic-set-002-q09",
@@ -330,7 +246,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a domestic trip you took recently. Where did you go? Who did you go with? What did you do there?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q09-a09f62a783df.mp3"
   },
   {
     "id": "opic-set-002-q10",
@@ -339,7 +256,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a memorable experience you had while traveling in your own country. What made the experience special?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q10-388807c9c285.mp3"
   },
   {
     "id": "opic-set-002-q11",
@@ -348,7 +266,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You are planning a short trip with a friend. Call your friend and ask three or four questions about the destination, schedule, and transportation.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q11-cc4aa7ffe1cd.mp3"
   },
   {
     "id": "opic-set-002-q12",
@@ -357,7 +276,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. Your travel schedule has changed, so you need to adjust the plan with your friend. Call your friend, explain the situation, and suggest two or three alternatives.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q12-723a7ac51fcb.mp3"
   },
   {
     "id": "opic-set-002-q13",
@@ -366,7 +286,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever changed a travel plan before? What happened, and how did you handle it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q13-ed4088556a8f.mp3"
   },
   {
     "id": "opic-set-002-q14",
@@ -375,7 +296,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about cafes or coffee shops in your country. What are they like, and why do people go there?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q14-16cbd2bcbae3.mp3"
   },
   {
     "id": "opic-set-002-q15",
@@ -384,7 +306,8 @@
     "type": "role_play",
     "ttsScriptEn": "I often go to cafes, too. Ask me three or four questions about the cafes I like and what I usually do there.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-002-q15-139a691d9354.mp3"
   },
   {
     "id": "opic-set-003-q01",
@@ -393,7 +316,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-003-q02",
@@ -402,7 +326,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about banks in your country. Where are they usually located, and what services do they provide?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q02-030998b7f918.mp3"
   },
   {
     "id": "opic-set-003-q03",
@@ -411,7 +336,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What do you usually do when you go to the bank or use banking services?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q03-bb512309ed85.mp3"
   },
   {
     "id": "opic-set-003-q04",
@@ -420,7 +346,8 @@
     "type": "comparison",
     "ttsScriptEn": "How has banking changed in your country? Do people still visit banks often, or do they use online banking more?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q04-a92774864e2d.mp3"
   },
   {
     "id": "opic-set-003-q05",
@@ -429,7 +356,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "You indicated in the survey that you travel domestically. Tell me about a place you like to visit in your country.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q05-ff08c7777867.mp3"
   },
   {
     "id": "opic-set-003-q06",
@@ -438,7 +366,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a trip you took when you were younger. Where did you go? Who did you go with? What did you do?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q06-03f6f216ef85.mp3"
   },
   {
     "id": "opic-set-003-q07",
@@ -447,7 +376,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a recent or memorable domestic trip. What did you enjoy most about the trip?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q07-4eec09808bc3.mp3"
   },
   {
     "id": "opic-set-003-q08",
@@ -456,7 +386,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What is your favorite kind of movie? Why do you like that type of movie?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q08-ca7524472a86.mp3"
   },
   {
     "id": "opic-set-003-q09",
@@ -465,7 +396,8 @@
     "type": "past_experience",
     "ttsScriptEn": "When was the last time you watched a movie? Where did you watch it? Who did you watch it with?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q09-0ce0cca4e474.mp3"
   },
   {
     "id": "opic-set-003-q10",
@@ -474,7 +406,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a movie you remember well. What was it about, and why was it memorable?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q10-ca4dca844f74.mp3"
   },
   {
     "id": "opic-set-003-q11",
@@ -483,7 +416,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You want to watch a movie with a friend this weekend. Call your friend and ask three or four questions about what movie to watch, where to meet, and what time to go.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q11-8bfc920b5e60.mp3"
   },
   {
     "id": "opic-set-003-q12",
@@ -492,7 +426,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. You cannot meet your friend at the original time. Call your friend, explain the situation, and suggest two or three new plans.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q12-9308ca174a0a.mp3"
   },
   {
     "id": "opic-set-003-q13",
@@ -501,7 +436,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever had to change plans with a friend? Tell me what happened.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q13-56326860f130.mp3"
   },
   {
     "id": "opic-set-003-q14",
@@ -510,7 +446,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about typical restaurants in your country. What kinds of food do they serve, and what are they like?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q14-339a53b7b2dd.mp3"
   },
   {
     "id": "opic-set-003-q15",
@@ -519,7 +456,8 @@
     "type": "role_play",
     "ttsScriptEn": "I enjoy eating out, too. Ask me three or four questions about the restaurants I like and the food I usually order.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-003-q15-d87162ecea42.mp3"
   },
   {
     "id": "opic-set-004-q01",
@@ -528,7 +466,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-004-q02",
@@ -537,7 +476,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What is the weather like in your country? Tell me about the seasons and the weather during each season.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q02-8ec6cd6f5fb8.mp3"
   },
   {
     "id": "opic-set-004-q03",
@@ -546,7 +486,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kind of weather do you like the most? Why do you like that kind of weather?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q03-356a6075b4ed.mp3"
   },
   {
     "id": "opic-set-004-q04",
@@ -555,7 +496,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about a day when the weather was very nice. Where were you, and what did you do?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q04-d9d3c0b94700.mp3"
   },
   {
     "id": "opic-set-004-q05",
@@ -564,7 +506,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about restaurants in your country. What kinds of restaurants are common?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q05-f82aae548d16.mp3"
   },
   {
     "id": "opic-set-004-q06",
@@ -573,7 +516,8 @@
     "type": "past_experience",
     "ttsScriptEn": "When was the last time you ate out? Where did you go? Who did you go with? What did you eat?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q06-938c45784e84.mp3"
   },
   {
     "id": "opic-set-004-q07",
@@ -582,7 +526,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about your favorite restaurant. What is it like, and why do you like going there?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q07-6368d0032807.mp3"
   },
   {
     "id": "opic-set-004-q08",
@@ -591,7 +536,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "You indicated in the survey that you take vacations. What do people in your country usually do during vacations?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q08-6d19877068b7.mp3"
   },
   {
     "id": "opic-set-004-q09",
@@ -600,7 +546,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about a vacation you enjoyed. Where did you go, and what did you do there?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q09-c63a3de9d277.mp3"
   },
   {
     "id": "opic-set-004-q10",
@@ -609,7 +556,8 @@
     "type": "comparison",
     "ttsScriptEn": "How are vacations different now compared to the past? Do you think people travel more than before?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q10-880b601eefea.mp3"
   },
   {
     "id": "opic-set-004-q11",
@@ -618,7 +566,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You want to have dinner with a friend during your vacation. Call a restaurant and ask three or four questions about the menu, hours, and available tables.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q11-3a6e56f61dcd.mp3"
   },
   {
     "id": "opic-set-004-q12",
@@ -627,7 +576,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. Your vacation schedule changed, so you need to move the dinner time. Call the restaurant, explain the situation, and suggest two or three possible times.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q12-2dc3a863d01b.mp3"
   },
   {
     "id": "opic-set-004-q13",
@@ -636,7 +586,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever changed a plan during a vacation? What happened?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q13-343de09c0933.mp3"
   },
   {
     "id": "opic-set-004-q14",
@@ -645,7 +596,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about public transportation in your country. What types are available, and who usually uses them?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q14-ff577f537bdc.mp3"
   },
   {
     "id": "opic-set-004-q15",
@@ -654,7 +606,8 @@
     "type": "role_play",
     "ttsScriptEn": "I use public transportation sometimes. Ask me three or four questions about how I get around and what transportation I prefer.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-004-q15-05bc0b0be868.mp3"
   },
   {
     "id": "opic-set-005-q01",
@@ -663,7 +616,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-005-q02",
@@ -672,7 +626,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "I would like to know about your house. What does it look like, and what rooms does it have?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q02-fc97d755169d.mp3"
   },
   {
     "id": "opic-set-005-q03",
@@ -681,7 +636,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about your favorite room at home. What do you usually do there?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q03-40f2397685c9.mp3"
   },
   {
     "id": "opic-set-005-q04",
@@ -690,7 +646,8 @@
     "type": "comparison",
     "ttsScriptEn": "Tell me about the home you lived in when you were a child. How was it different from your current home?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q04-cab4246eb932.mp3"
   },
   {
     "id": "opic-set-005-q05",
@@ -699,7 +656,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "You indicated in the survey that you enjoy shopping. Tell me about shopping places in your country.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q05-825dece44737.mp3"
   },
   {
     "id": "opic-set-005-q06",
@@ -708,7 +666,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kinds of things do you usually buy when you go shopping? Where do you usually buy them?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q06-eb2587eedbc8.mp3"
   },
   {
     "id": "opic-set-005-q07",
@@ -717,7 +676,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about the last time you went shopping. Where did you go? Who did you go with? What did you buy?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q07-d3db50aaeb07.mp3"
   },
   {
     "id": "opic-set-005-q08",
@@ -726,7 +686,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about cafes or coffee shops in your country. What are they like, and what do people usually do there?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q08-3aae537485b3.mp3"
   },
   {
     "id": "opic-set-005-q09",
@@ -735,7 +696,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "How often do you go to cafes? What do you usually order, and who do you usually go with?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q09-dbcba66cbd6a.mp3"
   },
   {
     "id": "opic-set-005-q10",
@@ -744,7 +706,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about a cafe you like. Where is it, and why do you like it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q10-feff90564eae.mp3"
   },
   {
     "id": "opic-set-005-q11",
@@ -753,7 +716,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You want to meet your friend at a cafe this weekend. Call your friend and ask three or four questions about the time, place, and what you will do there.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q11-88b8cbd83b51.mp3"
   },
   {
     "id": "opic-set-005-q12",
@@ -762,7 +726,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. You need to change the meeting place because the cafe is too crowded. Call your friend, explain the situation, and suggest two or three other places.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q12-7f4a1884b543.mp3"
   },
   {
     "id": "opic-set-005-q13",
@@ -771,7 +736,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever changed plans with someone at the last minute? What happened?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q13-790fc0f1685c.mp3"
   },
   {
     "id": "opic-set-005-q14",
@@ -780,7 +746,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about the music you enjoy. What kind of music do you listen to, and when do you listen to it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q14-a51b7b2e9901.mp3"
   },
   {
     "id": "opic-set-005-q15",
@@ -789,7 +756,8 @@
     "type": "role_play",
     "ttsScriptEn": "I like music, too. Ask me three or four questions about my favorite music, singers, or concerts.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-005-q15-216079f23e2b.mp3"
   },
   {
     "id": "opic-set-006-q01",
@@ -798,7 +766,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-006-q02",
@@ -807,7 +776,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "You indicated in the survey that you enjoy traveling domestically. Tell me about a place in your country that many people like to visit.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q02-7fa8f4073077.mp3"
   },
   {
     "id": "opic-set-006-q03",
@@ -816,7 +786,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a domestic trip you took recently. Where did you go? Who did you go with? What did you do?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q03-b1a1f54c0630.mp3"
   },
   {
     "id": "opic-set-006-q04",
@@ -825,7 +796,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What do you usually prepare before taking a trip in your country?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q04-29c37038af56.mp3"
   },
   {
     "id": "opic-set-006-q05",
@@ -834,7 +806,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about a trip you took in your childhood. Where did you go? Who did you go with?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q05-e3fddfcf146d.mp3"
   },
   {
     "id": "opic-set-006-q06",
@@ -843,7 +816,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What did you do during that childhood trip? Why do you remember it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q06-7bc2e4ca1d59.mp3"
   },
   {
     "id": "opic-set-006-q07",
@@ -852,7 +826,8 @@
     "type": "comparison",
     "ttsScriptEn": "How are the trips you take now different from the trips you took when you were a child?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q07-082cfc257530.mp3"
   },
   {
     "id": "opic-set-006-q08",
@@ -861,7 +836,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about restaurants in your country. What kinds of food do people usually eat when they go out?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q08-8415623d13d0.mp3"
   },
   {
     "id": "opic-set-006-q09",
@@ -870,7 +846,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kind of restaurant do you like to go to? Why do you like that type of restaurant?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q09-a36ec5ffd663.mp3"
   },
   {
     "id": "opic-set-006-q10",
@@ -879,7 +856,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about a special meal you had at a restaurant. Where did you eat it, and what made it special?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q10-99ab448e5197.mp3"
   },
   {
     "id": "opic-set-006-q11",
@@ -888,7 +866,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You are planning to visit a restaurant with your family during a trip. Call the restaurant and ask three or four questions about the menu, location, and hours.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q11-154ce360c137.mp3"
   },
   {
     "id": "opic-set-006-q12",
@@ -897,7 +876,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. Your family wants to eat at a different time. Call the restaurant, explain the situation, and suggest two or three possible changes.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q12-3423b634776c.mp3"
   },
   {
     "id": "opic-set-006-q13",
@@ -906,7 +886,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever planned a meal with other people? Tell me about the experience.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q13-1b6cac9bb3b0.mp3"
   },
   {
     "id": "opic-set-006-q14",
@@ -915,7 +896,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kinds of movies do people in your country enjoy? Are there any popular types of movies?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q14-cb7e3e99abb7.mp3"
   },
   {
     "id": "opic-set-006-q15",
@@ -924,7 +906,8 @@
     "type": "role_play",
     "ttsScriptEn": "I enjoy watching movies, too. Ask me three or four questions about movies I like and how often I watch them.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-006-q15-ca2e0f7aa26d.mp3"
   },
   {
     "id": "opic-set-007-q01",
@@ -933,7 +916,8 @@
     "type": "self_intro",
     "ttsScriptEn": "Let's start the interview now. Tell me something about yourself.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q01-8e32ac79fc94.mp3"
   },
   {
     "id": "opic-set-007-q02",
@@ -942,7 +926,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about exercise or physical activities in your country. What kinds of activities are popular?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q02-0ca411121b9b.mp3"
   },
   {
     "id": "opic-set-007-q03",
@@ -951,7 +936,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kind of exercise do you like to do? How often do you do it, and where do you usually do it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q03-8a6c60397786.mp3"
   },
   {
     "id": "opic-set-007-q04",
@@ -960,7 +946,8 @@
     "type": "past_experience",
     "ttsScriptEn": "Tell me about a time when you exercised or played a sport with other people. Who were you with, and what did you do?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q04-c72eb2f7a4f2.mp3"
   },
   {
     "id": "opic-set-007-q05",
@@ -969,7 +956,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about transportation in your country. What kinds of transportation do people usually use?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q05-bd9c769a7987.mp3"
   },
   {
     "id": "opic-set-007-q06",
@@ -978,7 +966,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What kind of transportation do you use most often? Why do you use it?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q06-5b2d498cbd0e.mp3"
   },
   {
     "id": "opic-set-007-q07",
@@ -987,7 +976,8 @@
     "type": "comparison",
     "ttsScriptEn": "How has transportation changed in your country over time?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q07-f85066318e36.mp3"
   },
   {
     "id": "opic-set-007-q08",
@@ -996,7 +986,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "Tell me about banks in your country. Where are they located, and what are they like?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q08-efaf2ca4c8b2.mp3"
   },
   {
     "id": "opic-set-007-q09",
@@ -1005,7 +996,8 @@
     "type": "personal_prompt",
     "ttsScriptEn": "What do you usually do when you use banking services?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q09-c31dc6b0ec82.mp3"
   },
   {
     "id": "opic-set-007-q10",
@@ -1014,7 +1006,8 @@
     "type": "comparison",
     "ttsScriptEn": "Do people in your country use online banking or mobile banking? Tell me about how banking is changing.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q10-331757252d75.mp3"
   },
   {
     "id": "opic-set-007-q11",
@@ -1023,7 +1016,8 @@
     "type": "role_play",
     "ttsScriptEn": "I'd like to give you a situation and ask you to act it out. You are going to visit a friend who lives overseas. Call your friend and ask three or four questions about the country, the weather, and transportation there.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q11-f91fba6d2535.mp3"
   },
   {
     "id": "opic-set-007-q12",
@@ -1032,7 +1026,8 @@
     "type": "problem_solving",
     "ttsScriptEn": "I'm sorry, but there is a problem I need you to resolve. You cannot travel on the original date. Call your friend, explain the situation, and suggest two or three new plans.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q12-1d876662fffb.mp3"
   },
   {
     "id": "opic-set-007-q13",
@@ -1041,7 +1036,8 @@
     "type": "past_experience",
     "ttsScriptEn": "That's the end of the situation. Have you ever traveled overseas or wanted to travel overseas? Tell me about the place and why you were interested in it.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q13-b99d3bbe33aa.mp3"
   },
   {
     "id": "opic-set-007-q14",
@@ -1050,7 +1046,8 @@
     "type": "comparison",
     "ttsScriptEn": "How is traveling overseas different from traveling in your own country?",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q14-cfa117881a36.mp3"
   },
   {
     "id": "opic-set-007-q15",
@@ -1059,6 +1056,7 @@
     "type": "role_play",
     "ttsScriptEn": "I have traveled overseas before. Ask me three or four questions about the country I visited, what I did there, and what I remember most.",
     "prepSeconds": 30,
-    "answerSeconds": 90
+    "answerSeconds": 90,
+    "ttsAudioUrl": "/tts/questions/nova/opic-set-007-q15-740c3c1a5468.mp3"
   }
 ]

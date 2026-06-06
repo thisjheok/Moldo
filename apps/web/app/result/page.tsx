@@ -83,8 +83,8 @@ export default async function ResultPage({ searchParams }: ResultPageProps) {
           <p>
             <strong>문항 {selectedAnswer.questionOrder}.</strong> {selectedAnswer.questionPrompt}
           </p>
-          <Link href={`/exam?examId=${result.examId}`}>
-            다른 문항 보기 ({selectedAnswer.questionOrder} / {result.questionCount})
+          <Link href="/">
+            다른 시험 보기
             <ArrowIcon />
           </Link>
         </section>
