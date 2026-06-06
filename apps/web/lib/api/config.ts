@@ -25,6 +25,11 @@ export function getApiBaseUrl(): string {
         return normalizedBaseUrl;
       }
 
+      const serverApiBaseUrl = process.env.MOLDO_API_PROXY_TARGET?.trim();
+      if (serverApiBaseUrl) {
+        return serverApiBaseUrl.replace(/\/$/, "");
+      }
+
       const serverOrigin = getServerOrigin();
       if (serverOrigin) {
         return `${serverOrigin}${normalizedBaseUrl}`;
