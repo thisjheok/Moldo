@@ -36,13 +36,13 @@ export default async function HomePage() {
       </main>
 
       <footer className="site-footer">
-        <p>© 2024 Moldo. All rights reserved.</p>
+        <p>© 2026 Moldo. All rights reserved.</p>
         <nav aria-label="정책">
           <a href="#">개인정보처리방침</a>
           <a href="#">이용약관</a>
           <a href="#">고객센터</a>
         </nav>
-        <p>이메일 문의: support@moldospeaking.com</p>
+        <p>이메일 문의: jhjang3344@gmail.com</p>
       </footer>
     </div>
   );
