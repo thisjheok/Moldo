@@ -1,4 +1,4 @@
-#!/Users/jangjaehyeok/Desktop/dev/Ditto/apps/api/.venv/bin/python3.12
+#!/Users/jangjaehyeok/Desktop/dev/Moldo/apps/api/.venv/bin/python3.12
 import sys
 from httpx import main
 if __name__ == '__main__':
