@@ -1,6 +1,5 @@
 from moldo_api.schemas.auth import AuthenticatedUser, AuthSession, LoginRequest
 from moldo_api.schemas.exam import (
-    ExamDifficulty,
     ExamIconName,
     ExamMode,
     ExamQuestion,
@@ -13,7 +12,6 @@ from moldo_api.schemas.result import ExamResult, ResultAnswer, ScoreCategory, Sc
 from moldo_api.schemas.session import ExamSession, SessionAnswerMetadata, SessionStatus
 
 __all__ = [
-    "ExamDifficulty",
     "LoginRequest",
     "AuthenticatedUser",
     "AuthSession",

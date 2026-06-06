@@ -3,7 +3,6 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict
 
 
-ExamDifficulty = Literal["easy", "medium", "hard"]
 ExamMode = Literal["mock"]
 ExamIconName = Literal["document", "message", "target"]
 QuestionType = Literal[
@@ -26,7 +25,6 @@ class ExamSummary(ApiDto):
     tag: str
     questionCount: int
     estimatedMinutes: int
-    difficulty: ExamDifficulty
     mode: ExamMode
     icon: ExamIconName
     description: str | None = None
@@ -38,5 +36,6 @@ class ExamQuestion(ApiDto):
     order: int
     type: QuestionType
     ttsScriptEn: str
+    ttsAudioUrl: str | None = None
     prepSeconds: int
     answerSeconds: int
