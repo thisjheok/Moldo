@@ -39,6 +39,14 @@ class DatabaseSettings(BaseModel):
     path: Path
 
 
+class CorsSettings(BaseModel):
+    origins: list[str]
+
+
+class StorageSettings(BaseModel):
+    audio_path: Path
+
+
 def load_local_env() -> None:
     env_path = REPO_ROOT / ".env"
     if not env_path.exists():
@@ -82,6 +90,19 @@ def _get_session_same_site() -> Literal["lax", "strict", "none"]:
     raise ValueError("MOLDO_SESSION_SAME_SITE must be one of: lax, strict, none.")
 
 
+def _resolve_repo_path(path_value: str | None, default_path: Path) -> Path:
+    resolved_path = Path(path_value) if path_value else default_path
+    if not resolved_path.is_absolute():
+        resolved_path = REPO_ROOT / resolved_path
+    return resolved_path
+
+
+def _parse_csv_env(value: str | None) -> list[str]:
+    if not value:
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
 @lru_cache
 def get_openai_settings() -> OpenAISettings:
     load_local_env()
@@ -113,14 +134,29 @@ def get_auth_settings() -> AuthSettings:
 @lru_cache
 def get_database_settings() -> DatabaseSettings:
     load_local_env()
-    database_path = os.getenv("MOLDO_DATABASE_PATH")
-    resolved_path = (
-        Path(database_path)
-        if database_path
-        else REPO_ROOT / "apps" / "api" / ".data" / "moldo.sqlite3"
-    )
-    if not resolved_path.is_absolute():
-        resolved_path = REPO_ROOT / resolved_path
     return DatabaseSettings(
-        path=resolved_path,
+        path=_resolve_repo_path(
+            os.getenv("MOLDO_DATABASE_PATH"),
+            REPO_ROOT / "apps" / "api" / ".data" / "moldo.sqlite3",
+        ),
+    )
+
+
+@lru_cache
+def get_cors_settings() -> CorsSettings:
+    load_local_env()
+    origins = _parse_csv_env(os.getenv("MOLDO_CORS_ORIGINS"))
+    if not origins:
+        origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    return CorsSettings(origins=origins)
+
+
+@lru_cache
+def get_storage_settings() -> StorageSettings:
+    load_local_env()
+    return StorageSettings(
+        audio_path=_resolve_repo_path(
+            os.getenv("MOLDO_AUDIO_STORAGE_PATH"),
+            REPO_ROOT / "apps" / "api" / ".data" / "uploads",
+        ),
     )

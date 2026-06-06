@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from uuid import uuid4
 
+from moldo_api.config import get_storage_settings
+
 
 @dataclass(frozen=True)
 class StoredAudio:
@@ -96,5 +98,4 @@ def _extension_for_audio(mime_type: str | None, file_name: str | None) -> str:
     return ".webm"
 
 
-REPO_ROOT = Path(__file__).resolve().parents[5]
-DEFAULT_AUDIO_STORAGE = LocalAudioStorage(REPO_ROOT / "apps" / "api" / ".data" / "uploads")
+DEFAULT_AUDIO_STORAGE = LocalAudioStorage(get_storage_settings().audio_path)

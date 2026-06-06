@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from moldo_api.auth import require_current_user
-from moldo_api.config import get_auth_settings
+from moldo_api.config import get_auth_settings, get_cors_settings
 from moldo_api.data.audio_storage import DEFAULT_AUDIO_STORAGE
 from moldo_api.database import initialize_database
 from moldo_api.routes import attempts, auth, exams, health, histories, results, sessions
@@ -12,6 +12,7 @@ from moldo_api.routes import attempts, auth, exams, health, histories, results, 
 
 def create_app() -> FastAPI:
     auth_settings = get_auth_settings()
+    cors_settings = get_cors_settings()
     initialize_database()
     app = FastAPI(
         title="Moldo API",
@@ -29,7 +30,7 @@ def create_app() -> FastAPI:
     )
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+        allow_origins=cors_settings.origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
