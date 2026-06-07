@@ -24,6 +24,7 @@ type ExamIconName =
   | "info"
   | "mic"
   | "play"
+  | "skip"
   | "speaker"
   | "spinner"
   | "volume";
@@ -44,6 +45,8 @@ type QuestionAnswerState = {
 
 const maxQuestionPlaybackCount = 2;
 const maxGradableAnswerSeconds = 120;
+const minGradableAnswerSeconds = 2;
+const minGradableAnswerBytes = 2 * 1024;
 const exitConfirmMessage = "현재 세션을 나가겠습니까?\n지금까지 한 내용은 채점되지 않습니다.";
 
 function createInitialQuestionState(questions: ExamQuestion[]): QuestionAnswerState[] {
@@ -70,6 +73,10 @@ function getSupportedMimeType() {
   const mimeTypes = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"];
 
   return mimeTypes.find((mimeType) => MediaRecorder.isTypeSupported(mimeType)) ?? "";
+}
+
+function isGradableRecording(audioBlob: Blob, durationSeconds: number) {
+  return durationSeconds >= minGradableAnswerSeconds && audioBlob.size >= minGradableAnswerBytes;
 }
 
 function selectFemaleEnglishVoice(voices: SpeechSynthesisVoice[]) {
@@ -186,6 +193,15 @@ function ExamIcon({ name }: { name: ExamIconName }) {
     );
   }
 
+  if (name === "skip") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m5 7 7 5-7 5V7Z" />
+        <path d="m12 7 7 5-7 5V7Z" />
+      </svg>
+    );
+  }
+
   if (name === "speaker") {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -270,7 +286,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
       const question = questions[questionIndex];
 
       if (!question) {
-        return;
+        return false;
       }
 
       setIsSavingAnswer(true);
@@ -284,8 +300,10 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
           mimeType: audioBlob.type || undefined,
           audioBlob,
         });
+        return true;
       } catch {
         setMicrophoneError("답변 저장에 실패했습니다. 다시 시도해 주세요.");
+        return false;
       } finally {
         setIsSavingAnswer(false);
       }
@@ -354,6 +372,35 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
               ? 0
               : Math.min(Math.round((Date.now() - recordingStartedAtRef.current) / 1000), maxGradableAnswerSeconds);
 
+          if (!isGradableRecording(audioBlob, durationSeconds)) {
+            const pendingAfterSave = pendingAfterSaveRef.current;
+            pendingAfterSaveRef.current = null;
+            setQuestionStates((states) =>
+              states.map((questionState, index) =>
+                index === recordingQuestionIndex
+                  ? {
+                      ...questionState,
+                      isRecording: false,
+                      isCompleted: true,
+                      recordingSeconds: durationSeconds,
+                      audioBlob: null,
+                    }
+                  : questionState,
+              ),
+            );
+            stream.getTracks().forEach((track) => track.stop());
+            if (mediaStreamRef.current === stream) {
+              mediaStreamRef.current = null;
+            }
+            if (recorderRef.current === recorder) {
+              recorderRef.current = null;
+            }
+            recordingQuestionIndexRef.current = null;
+            recordingStartedAtRef.current = null;
+            pendingAfterSave?.();
+            return;
+          }
+
           setQuestionStates((states) =>
             states.map((questionState, index) =>
               index === recordingQuestionIndex
@@ -367,9 +414,26 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
                 : questionState,
             ),
           );
-          void persistAnswer(audioBlob, recordingQuestionIndex, durationSeconds).finally(() => {
+          void persistAnswer(audioBlob, recordingQuestionIndex, durationSeconds).then((didSaveAnswer) => {
             const pendingAfterSave = pendingAfterSaveRef.current;
             pendingAfterSaveRef.current = null;
+
+            if (!didSaveAnswer) {
+              setQuestionStates((states) =>
+                states.map((questionState, index) =>
+                  index === recordingQuestionIndex
+                    ? {
+                        ...questionState,
+                        isCompleted: true,
+                        audioBlob: null,
+                      }
+                    : questionState,
+                ),
+              );
+              pendingAfterSave?.();
+              return;
+            }
+
             pendingAfterSave?.();
           });
         }
@@ -913,6 +977,51 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
     setCurrentQuestion(questions[safeCurrentQuestionIndex + 1]?.order ?? currentQuestion);
   }
 
+  function completeCurrentQuestionWithoutAnswer() {
+    setQuestionStates((states) =>
+      states.map((questionState, index) =>
+        index === safeCurrentQuestionIndex
+          ? {
+              ...questionState,
+              hasPlayed: true,
+              isPlaying: false,
+              isRecording: false,
+              isCompleted: true,
+              audioBlob: null,
+            }
+          : questionState,
+      ),
+    );
+
+    if (safeCurrentQuestionIndex === questions.length - 1) {
+      void submitCurrentAttempt();
+      return;
+    }
+
+    setCurrentQuestion(questions[safeCurrentQuestionIndex + 1]?.order ?? currentQuestion);
+  }
+
+  function handleSkipQuestion() {
+    if (isSavingAnswer) {
+      return;
+    }
+
+    pendingAfterSaveRef.current = null;
+    playbackSessionRef.current += 1;
+    clearReplayWindowTimer();
+    stopQuestionAudio();
+    window.speechSynthesis?.cancel();
+    setMicrophoneError("");
+
+    const recorder = recorderRef.current;
+    if (recorder && recorder.state !== "inactive") {
+      discardedRecordersRef.current.add(recorder);
+      recorder.stop();
+    }
+
+    completeCurrentQuestionWithoutAnswer();
+  }
+
   const playbackSeconds = Math.max(0, currentQuestionState?.playbackSeconds ?? 0);
   const playbackDurationSeconds = Math.max(0, currentQuestionState?.playbackDurationSeconds ?? 0);
   const playbackProgressPercent =
@@ -1090,19 +1199,31 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
 
             <div className="question-actions opic-question-actions">
               <p className="question-action-instruction">
-                {safeCurrentQuestionIndex === questions.length - 1
-                  ? "답변 마무리 후 채점하기"
-                  : "답변 마무리 후 다음 문제로 넘어가기"}
+                {microphoneError ||
+                  (safeCurrentQuestionIndex === questions.length - 1
+                    ? "답변 마무리 후 채점하기"
+                    : "답변 마무리 후 다음 문제로 넘어가기")}
               </p>
-              <button
-                className="button primary next-question-button"
-                type="button"
-                onClick={handleNextQuestion}
-                disabled={isSavingAnswer || currentQuestionState?.isPlaying || !currentQuestionState?.hasPlayed}
-              >
-                {safeCurrentQuestionIndex === questions.length - 1 ? "채점하기" : "다음 문항"}
-                <ExamIcon name="chevron" />
-              </button>
+              <div className="question-action-buttons">
+                <button
+                  className="button secondary skip-question-button"
+                  type="button"
+                  onClick={handleSkipQuestion}
+                  disabled={isSavingAnswer}
+                >
+                  건너뛰기
+                  <ExamIcon name="skip" />
+                </button>
+                <button
+                  className="button primary next-question-button"
+                  type="button"
+                  onClick={handleNextQuestion}
+                  disabled={isSavingAnswer || currentQuestionState?.isPlaying || !currentQuestionState?.hasPlayed}
+                >
+                  {safeCurrentQuestionIndex === questions.length - 1 ? "채점하기" : "다음 문항"}
+                  <ExamIcon name="chevron" />
+                </button>
+              </div>
             </div>
           </section>
 

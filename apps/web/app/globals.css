@@ -2380,8 +2380,23 @@ svg {
 
 .opic-question-actions {
   display: grid;
+  gap: var(--space-3);
   justify-content: flex-end;
   justify-items: end;
+}
+
+.question-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.opic-question-actions .skip-question-button {
+  min-width: 156px;
+  min-height: 56px;
+  border-radius: var(--radius-sm);
+  font-size: 1.0625rem;
 }
 
 .opic-question-actions .next-question-button {
@@ -2403,6 +2418,11 @@ svg {
 .next-question-button svg {
   width: 24px;
   height: 24px;
+}
+
+.skip-question-button svg {
+  width: 22px;
+  height: 22px;
 }
 
 .exam-grading-workspace {
@@ -2851,6 +2871,15 @@ svg {
 
   .question-action-instruction {
     justify-self: end;
+  }
+
+  .question-action-buttons {
+    width: 100%;
+    flex-direction: column-reverse;
+  }
+
+  .skip-question-button {
+    width: 100%;
   }
 
   .next-question-button {
