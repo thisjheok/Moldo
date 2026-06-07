@@ -2,6 +2,7 @@ from datetime import UTC, datetime
 import json
 from pathlib import Path
 import sqlite3
+from typing import Any
 from uuid import uuid4
 
 from moldo_api.data.audio_storage import DEFAULT_AUDIO_STORAGE, AudioStorage
@@ -44,6 +45,70 @@ def _load_session_answers(payload: str) -> list[SessionAnswerMetadata]:
     if not isinstance(data, list):
         return []
     return [SessionAnswerMetadata.model_validate(item) for item in data]
+
+
+def _average_score_items(score_items: object) -> int:
+    if not isinstance(score_items, list):
+        return 0
+
+    scores: list[int] = []
+    for item in score_items:
+        if not isinstance(item, dict):
+            continue
+        score = item.get("score")
+        if isinstance(score, int):
+            scores.append(score)
+
+    if not scores:
+        return 0
+
+    return round(sum(scores) / len(scores))
+
+
+def _normalize_result_payload(payload: object) -> object:
+    if not isinstance(payload, dict):
+        return payload
+
+    normalized_payload: dict[str, Any] = dict(payload)
+    answers = normalized_payload.get("answers")
+    if not isinstance(answers, list):
+        normalized_payload.pop("scores", None)
+        return normalized_payload
+
+    normalized_answers: list[object] = []
+    for answer in answers:
+        if not isinstance(answer, dict):
+            normalized_answers.append(answer)
+            continue
+
+        normalized_answer: dict[str, Any] = dict(answer)
+        if "score" not in normalized_answer:
+            normalized_answer["score"] = _average_score_items(normalized_answer.get("scores"))
+        if "maxScore" not in normalized_answer:
+            normalized_answer["maxScore"] = normalized_payload.get("maxScore", 100)
+        normalized_answer.pop("scores", None)
+        normalized_answer.pop("strengths", None)
+        normalized_answers.append(normalized_answer)
+
+    normalized_payload["answers"] = normalized_answers
+    normalized_payload.pop("scores", None)
+
+    answer_scores: list[int] = []
+    for answer in normalized_answers:
+        if not isinstance(answer, dict):
+            continue
+        score = answer.get("score")
+        if isinstance(score, int):
+            answer_scores.append(score)
+
+    if answer_scores:
+        normalized_payload["totalScore"] = round(sum(answer_scores) / len(answer_scores))
+
+    return normalized_payload
+
+
+def _load_result(payload: object) -> ExamResult:
+    return ExamResult.model_validate(_normalize_result_payload(payload))
 
 
 def _row_to_attempt(row: sqlite3.Row) -> ExamAttempt:
@@ -388,12 +453,12 @@ def get_result(result_id: str) -> ExamResult | None:
     with connect() as connection:
         row = connection.execute("SELECT payload_json FROM results WHERE id = ?", (result_id,)).fetchone()
     if row is not None:
-        return ExamResult.model_validate(json.loads(row["payload_json"]))
+        return _load_result(json.loads(row["payload_json"]))
 
     data = _load_json("results.json")
     if not isinstance(data, list):
         return None
-    results = [ExamResult.model_validate(item) for item in data]
+    results = [_load_result(item) for item in data]
     return next((result for result in results if result.id == result_id), None)
 
 
@@ -406,7 +471,7 @@ def list_my_results() -> list[ExamHistoryItem]:
     with connect() as connection:
         rows = connection.execute("SELECT payload_json FROM results").fetchall()
 
-    generated_results = [ExamResult.model_validate(json.loads(row["payload_json"])) for row in rows]
+    generated_results = [_load_result(json.loads(row["payload_json"])) for row in rows]
     generated_histories = [
         ExamHistoryItem(
             id=f"history-{result.id.removeprefix('result-')}",

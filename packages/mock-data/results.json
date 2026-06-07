@@ -5,34 +5,8 @@
     "examTitle": "말하기 모의고사 1",
     "takenAt": "2024-05-14T14:20:00+09:00",
     "questionCount": 12,
-    "totalScore": 82,
+    "totalScore": 78,
     "maxScore": 100,
-    "scores": [
-      {
-        "category": "relevance",
-        "label": "질문 적합성",
-        "score": 84,
-        "maxScore": 100
-      },
-      {
-        "category": "coherence",
-        "label": "답변 구성",
-        "score": 80,
-        "maxScore": 100
-      },
-      {
-        "category": "grammar",
-        "label": "문법 정확성",
-        "score": 78,
-        "maxScore": 100
-      },
-      {
-        "category": "expression",
-        "label": "표현 다양성",
-        "score": 86,
-        "maxScore": 100
-      }
-    ],
     "answers": [
       {
         "questionId": "speaking-mock-1-q4",
@@ -40,37 +14,12 @@
         "questionPrompt": "Describe an electronic device you use often. Explain what it looks like, how you use it, and why it is useful in your daily life.",
         "transcript": "I use my smartphone a lot every day.\nI check SNS and watch videos.\nSometimes it wastes my time.\nI want to use it less.",
         "modelAnswer": "I use my smartphone a lot every day, especially for SNS and watching videos. However, it often wastes my time, so I want to reduce my screen time and use it more productively.",
-        "scores": [
-          {
-            "category": "relevance",
-            "label": "질문 적합성",
-            "score": 82,
-            "maxScore": 100
-          },
-          {
-            "category": "coherence",
-            "label": "답변 구성",
-            "score": 76,
-            "maxScore": 100
-          },
-          {
-            "category": "grammar",
-            "label": "문법 정확성",
-            "score": 78,
-            "maxScore": 100
-          },
-          {
-            "category": "expression",
-            "label": "표현 다양성",
-            "score": 74,
-            "maxScore": 100
-          }
-        ],
+        "score": 78,
+        "maxScore": 100,
         "audioUrl": "/mock-audio/my-answer-smartphone.mp3",
         "durationSeconds": 28,
         "modelAnswerAudioUrl": "/mock-audio/model-answer-smartphone.mp3",
         "modelAnswerDurationSeconds": 31,
-        "strengths": ["질문의 핵심 내용을 모두 포함했어요.", "간단한 문장으로 자신의 생각을 표현했어요."],
         "improvements": ["접속사(However, so 등)를 활용해 보세요.", "구체적인 예시를 추가하면 더 좋아요."]
       }
     ]

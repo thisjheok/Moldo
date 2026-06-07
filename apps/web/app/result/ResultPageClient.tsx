@@ -1,7 +1,6 @@
 "use client";
 
 import type { ExamResult } from "@moldo/types";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ApiError, getResult } from "../../lib/api";
 import { formatDateTime, formatScore } from "../../utils/formatters";
@@ -13,7 +12,7 @@ import { SiteHeader } from "../components/SiteHeader";
 
 type ResultPageClientProps = {
   initialIsAuthenticated: boolean;
-  resultId: string;
+  resultId: string | null;
 };
 
 type ResultPageState =
@@ -34,16 +33,23 @@ function ArrowIcon() {
 
 export function ResultPageClient({ initialIsAuthenticated, resultId }: ResultPageClientProps) {
   const [state, setState] = useState<ResultPageState>({ status: "loading" });
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
 
     async function loadResult() {
+      if (!resultId) {
+        setState({ status: "not_found" });
+        return;
+      }
+
       try {
         const result = await getResult(resultId);
 
         if (isMounted) {
           setState({ status: "ready", result });
+          setSelectedAnswerIndex(0);
         }
       } catch (error) {
         if (!isMounted) {
@@ -117,7 +123,7 @@ export function ResultPageClient({ initialIsAuthenticated, resultId }: ResultPag
     );
   }
 
-  const selectedAnswer = state.result.answers[0];
+  const selectedAnswer = state.result.answers[selectedAnswerIndex];
 
   if (!selectedAnswer) {
     return (
@@ -129,6 +135,9 @@ export function ResultPageClient({ initialIsAuthenticated, resultId }: ResultPag
       </div>
     );
   }
+
+  const hasPreviousAnswer = selectedAnswerIndex > 0;
+  const hasNextAnswer = selectedAnswerIndex < state.result.answers.length - 1;
 
   return (
     <div className="app-shell">
@@ -147,10 +156,12 @@ export function ResultPageClient({ initialIsAuthenticated, resultId }: ResultPag
             <span>/ {state.result.maxScore}</span>
           </div>
 
-          <div className="result-score-grid" aria-label="세부 평가 점수">
-            {state.result.scores.map((score) => (
-              <ScoreCard score={score} key={score.category} />
-            ))}
+          <div className="result-score-grid" aria-label="문항 평가 점수">
+            <ScoreCard
+              label={`문항 ${selectedAnswer.questionOrder} 점수`}
+              score={selectedAnswer.score}
+              maxScore={selectedAnswer.maxScore}
+            />
           </div>
         </section>
 
@@ -158,10 +169,26 @@ export function ResultPageClient({ initialIsAuthenticated, resultId }: ResultPag
           <p>
             <strong>문항 {selectedAnswer.questionOrder}.</strong> {selectedAnswer.questionPrompt}
           </p>
-          <Link href="/">
-            다른 시험 보기
-            <ArrowIcon />
-          </Link>
+          <div className="result-question-actions">
+            <button
+              type="button"
+              disabled={!hasPreviousAnswer}
+              onClick={() => setSelectedAnswerIndex((currentIndex) => currentIndex - 1)}
+            >
+              이전 문항
+            </button>
+            <span>
+              {selectedAnswerIndex + 1} / {state.result.answers.length}
+            </span>
+            <button
+              type="button"
+              disabled={!hasNextAnswer}
+              onClick={() => setSelectedAnswerIndex((currentIndex) => currentIndex + 1)}
+            >
+              다음 문항
+              <ArrowIcon />
+            </button>
+          </div>
         </section>
 
         <section className="result-answer-grid" aria-label="답변 비교">
@@ -169,21 +196,16 @@ export function ResultPageClient({ initialIsAuthenticated, resultId }: ResultPag
             title="내 답변"
             subtitle="전사 내용"
             content={selectedAnswer.transcript}
-            audioLabel="내 답변 듣기"
-            durationSeconds={selectedAnswer.durationSeconds}
           />
 
           <ResultAnswerCard
             title="이렇게 말하면 더 좋아요"
             subtitle="모범 답변"
             content={selectedAnswer.modelAnswer}
-            audioLabel="모범 답변 듣기"
-            durationSeconds={selectedAnswer.modelAnswerDurationSeconds}
           />
         </section>
 
         <section className="result-feedback-grid" aria-label="평가 피드백">
-          <FeedbackCard title="잘한 점" tone="good" items={selectedAnswer.strengths} />
           <FeedbackCard title="개선할 점" tone="improve" items={selectedAnswer.improvements} />
         </section>
       </main>

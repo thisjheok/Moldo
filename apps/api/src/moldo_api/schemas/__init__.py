@@ -8,7 +8,7 @@ from moldo_api.schemas.exam import (
 )
 from moldo_api.schemas.attempt import AttemptAnswerMetadata, AttemptStatus, ExamAttempt
 from moldo_api.schemas.history import ExamHistoryItem, MyPageProfile
-from moldo_api.schemas.result import ExamResult, ResultAnswer, ScoreCategory, ScoreItem
+from moldo_api.schemas.result import ExamResult, ResultAnswer
 from moldo_api.schemas.session import ExamSession, SessionAnswerMetadata, SessionStatus
 
 __all__ = [
@@ -30,6 +30,4 @@ __all__ = [
     "SessionStatus",
     "ExamResult",
     "ResultAnswer",
-    "ScoreCategory",
-    "ScoreItem",
 ]

@@ -45,25 +45,14 @@ def run_mock_grading_worker(
             )
             for answer in attempt.answers
         ]
-        attempt_evaluation = evaluation_service.evaluate_attempt(
-            [
-                (
-                    answer,
-                    transcripts_by_question_id.get(answer.questionId, ""),
-                    questions_by_id.get(answer.questionId),
-                )
-                for answer in attempt.answers
-            ]
-        )
         result = ExamResult(
             id=f"result-{attempt.id.removeprefix('attempt-')}",
             examId=attempt.examId,
             examTitle=exam.title if exam else attempt.examId,
             takenAt=attempt.submittedAt or attempt.startedAt,
             questionCount=len(questions),
-            totalScore=attempt_evaluation.total_score,
+            totalScore=_calculate_average_score(result_answers),
             maxScore=100,
-            scores=attempt_evaluation.scores,
             answers=result_answers,
         )
         complete_attempt_with_result(attempt_id, result)
@@ -89,11 +78,17 @@ def _build_result_answer(
         questionPrompt=prompt,
         transcript=transcript,
         modelAnswer=answer_evaluation.model_answer,
-        scores=answer_evaluation.scores,
+        score=answer_evaluation.score,
+        maxScore=100,
         audioUrl=answer.audioUrl,
         durationSeconds=answer.durationSeconds,
         modelAnswerAudioUrl=None,
         modelAnswerDurationSeconds=None,
-        strengths=answer_evaluation.strengths,
         improvements=answer_evaluation.improvements,
     )
+
+
+def _calculate_average_score(result_answers: list[ResultAnswer]) -> int:
+    if not result_answers:
+        return 0
+    return round(sum(answer.score for answer in result_answers) / len(result_answers))
