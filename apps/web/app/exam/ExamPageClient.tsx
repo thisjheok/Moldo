@@ -34,6 +34,7 @@ type QuestionAnswerState = {
   playbackSeconds: number;
   playbackDurationSeconds: number;
   isReplayAvailable: boolean;
+  replayRemainingSeconds: number;
   isPlaying: boolean;
   isRecording: boolean;
   isCompleted: boolean;
@@ -52,6 +53,7 @@ function createInitialQuestionState(questions: ExamQuestion[]): QuestionAnswerSt
     playbackSeconds: 0,
     playbackDurationSeconds: 0,
     isReplayAvailable: false,
+    replayRemainingSeconds: 0,
     isPlaying: false,
     isRecording: false,
     isCompleted: false,
@@ -258,7 +260,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
 
   const clearReplayWindowTimer = useCallback(() => {
     if (replayWindowTimerRef.current !== null) {
-      window.clearTimeout(replayWindowTimerRef.current);
+      window.clearInterval(replayWindowTimerRef.current);
       replayWindowTimerRef.current = null;
     }
   }, []);
@@ -310,6 +312,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
               ...questionState,
               hasPlayed: true,
               isReplayAvailable: options?.keepReplayAvailable ? questionState.isReplayAvailable : false,
+              replayRemainingSeconds: options?.keepReplayAvailable ? questionState.replayRemainingSeconds : 0,
               isPlaying: false,
             }
           : questionState,
@@ -389,6 +392,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
                 ...questionState,
                 hasPlayed: true,
                 isReplayAvailable: options?.keepReplayAvailable ? questionState.isReplayAvailable : false,
+                replayRemainingSeconds: options?.keepReplayAvailable ? questionState.replayRemainingSeconds : 0,
                 isPlaying: false,
                 isRecording: true,
                 recordingSeconds: options?.resetRemainingSeconds ? 0 : questionState.recordingSeconds,
@@ -514,6 +518,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
           ? {
               ...questionState,
               isReplayAvailable: false,
+              replayRemainingSeconds: 0,
               isPlaying: true,
               isRecording: false,
               playbackSeconds: 0,
@@ -548,6 +553,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
                   ? questionState.playbackDurationSeconds
                   : questionState.playbackSeconds,
               isReplayAvailable: completedPlaybackCount === 1,
+              replayRemainingSeconds: completedPlaybackCount === 1 ? 5 : 0,
               isPlaying: false,
             };
           },
@@ -559,14 +565,30 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
         return;
       }
 
-      replayWindowTimerRef.current = window.setTimeout(() => {
-        replayWindowTimerRef.current = null;
+      replayWindowTimerRef.current = window.setInterval(() => {
         setQuestionStates((states) =>
-          states.map((questionState, index) =>
-            index === safeCurrentQuestionIndex ? { ...questionState, isReplayAvailable: false } : questionState,
-          ),
+          states.map((questionState, index) => {
+            if (index !== safeCurrentQuestionIndex || !questionState.isReplayAvailable) {
+              return questionState;
+            }
+
+            const nextRemainingSeconds = questionState.replayRemainingSeconds - 1;
+            if (nextRemainingSeconds <= 0) {
+              clearReplayWindowTimer();
+              return {
+                ...questionState,
+                isReplayAvailable: false,
+                replayRemainingSeconds: 0,
+              };
+            }
+
+            return {
+              ...questionState,
+              replayRemainingSeconds: nextRemainingSeconds,
+            };
+          }),
         );
-      }, 5000);
+      }, 1000);
 
       startRecording({ keepReplayAvailable: true, resetRemainingSeconds: true });
     };
@@ -866,7 +888,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
   }, [isGrading, router, submittedAttemptId]);
 
   function handleNextQuestion() {
-    if (isSavingAnswer || currentQuestionState?.isPlaying) {
+    if (isSavingAnswer || currentQuestionState?.isPlaying || !currentQuestionState?.hasPlayed) {
       return;
     }
 
@@ -902,6 +924,14 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
     playbackDurationSeconds > 0
       ? formatDuration(Math.ceil(playbackDurationSeconds), { padMinutes: true })
       : "00:00";
+  const audioInstruction =
+    currentQuestionState?.isPlaying
+      ? "시험 발문 재생 중"
+      : currentQuestionState?.playbackCount === 1 && currentQuestionState.isReplayAvailable
+        ? `${currentQuestionState.replayRemainingSeconds}초 안에 한 번 더 듣기`
+        : (currentQuestionState?.playbackCount ?? 0) === 0
+          ? "재생 버튼을 눌러 시험 발문 듣기"
+          : null;
 
   return (
     <div className="exam-shell">
@@ -984,7 +1014,7 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
             </div>
 
             <div className="audio-section" aria-label="지문 재생">
-              <p className="audio-instruction">재생 버튼을 눌러 시험 발문 듣기</p>
+              {audioInstruction ? <p className="audio-instruction">{audioInstruction}</p> : null}
               <div className="audio-player" aria-label="지문 오디오 플레이어">
                 <button
                   className="audio-play-button"
@@ -1059,11 +1089,16 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
             </section>
 
             <div className="question-actions opic-question-actions">
+              <p className="question-action-instruction">
+                {safeCurrentQuestionIndex === questions.length - 1
+                  ? "답변 마무리 후 채점하기"
+                  : "답변 마무리 후 다음 문제로 넘어가기"}
+              </p>
               <button
                 className="button primary next-question-button"
                 type="button"
                 onClick={handleNextQuestion}
-                disabled={isSavingAnswer || currentQuestionState?.isPlaying}
+                disabled={isSavingAnswer || currentQuestionState?.isPlaying || !currentQuestionState?.hasPlayed}
               >
                 {safeCurrentQuestionIndex === questions.length - 1 ? "채점하기" : "다음 문항"}
                 <ExamIcon name="chevron" />

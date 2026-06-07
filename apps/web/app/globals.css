@@ -2197,7 +2197,35 @@ svg {
 
 .question-actions {
   display: flex;
+  align-items: flex-end;
   justify-content: flex-end;
+}
+
+.question-action-instruction {
+  position: relative;
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  color: var(--color-primary-strong);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  font-weight: 800;
+  box-shadow: var(--shadow-control);
+}
+
+.question-action-instruction::after {
+  content: "";
+  position: absolute;
+  right: 28px;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-border-strong);
+  background: var(--color-bg-elevated);
+  transform: rotate(45deg);
 }
 
 .opic-exam-workspace {
@@ -2340,7 +2368,9 @@ svg {
 }
 
 .opic-question-actions {
+  display: grid;
   justify-content: flex-end;
+  justify-items: end;
 }
 
 .opic-question-actions .next-question-button {
@@ -2804,6 +2834,12 @@ svg {
 
   .opic-question-actions {
     padding-top: var(--space-4);
+    justify-content: stretch;
+    justify-items: stretch;
+  }
+
+  .question-action-instruction {
+    justify-self: end;
   }
 
   .next-question-button {
