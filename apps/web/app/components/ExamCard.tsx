@@ -66,8 +66,8 @@ function LockIcon() {
 export function ExamCard({ exam }: { exam: ExamSummary }) {
   const router = useRouter();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [email, setEmail] = useState("hong@example.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [helperMessage, setHelperMessage] = useState("");
   const [isCheckingAuth, setIsCheckingAuth] = useState(false);

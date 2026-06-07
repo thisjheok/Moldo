@@ -16,8 +16,8 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState("hong@example.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [helperMessage, setHelperMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,7 +30,7 @@ function LoginForm() {
 
     try {
       await login(email, password);
-      router.replace(searchParams.get("next") ?? "/mypage");
+      router.replace(searchParams.get("next") ?? "/");
       router.refresh();
     } catch {
       setError("이메일 또는 비밀번호를 확인해 주세요.");

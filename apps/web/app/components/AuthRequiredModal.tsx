@@ -30,8 +30,8 @@ export function AuthRequiredModal({
   titleId,
 }: AuthRequiredModalProps) {
   const router = useRouter();
-  const [email, setEmail] = useState("hong@example.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [helperMessage, setHelperMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
