@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
@@ -20,10 +20,26 @@ class AuthUserSettings(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: str
-    username: str
+    username: str | None = None
     email: str
     password: str
     name: str
+
+    @model_validator(mode="after")
+    def fill_legacy_username(self) -> "AuthUserSettings":
+        if self.username and self.username.strip():
+            self.username = self.username.strip()
+            return self
+
+        fallback_username = self.id.strip()
+        if not fallback_username and "@" in self.email:
+            fallback_username = self.email.split("@", 1)[0].strip()
+
+        if not fallback_username:
+            raise ValueError("username is required.")
+
+        self.username = fallback_username
+        return self
 
 
 class AuthSettings(BaseModel):

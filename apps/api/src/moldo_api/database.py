@@ -89,6 +89,9 @@ def connect() -> Iterator[sqlite3.Connection]:
 
 def _seed_auth_users(connection: sqlite3.Connection, users: list[AuthUserSettings]) -> None:
     for user in users:
+        if user.username is None:
+            raise ValueError("Seed auth user username was not resolved.")
+
         password = user.password if is_password_hash(user.password) else hash_password(user.password)
         connection.execute(
             """

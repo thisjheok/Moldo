@@ -11,6 +11,7 @@
 FastAPI is the authentication owner. The API issues a signed cookie session named `moldo_session` by default, and protected endpoints require that cookie.
 
 Initial users are seeded into SQLite from `MOLDO_AUTH_USERS` as a JSON array. `password` values may be plain text in configuration; they are stored as password hashes in SQLite.
+For legacy deployment settings, if `username` is omitted, the API uses `id` as the login username.
 
 ```json
 [
