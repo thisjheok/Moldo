@@ -5,10 +5,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getAuthSession, logout } from "../../lib/api";
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  initialIsAuthenticated?: boolean;
+};
+
+export function SiteHeader({ initialIsAuthenticated }: SiteHeaderProps) {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated ?? false);
+  const [isAuthLoaded, setIsAuthLoaded] = useState(initialIsAuthenticated !== undefined);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
@@ -57,7 +61,11 @@ export function SiteHeader() {
       </Link>
 
       <nav className="site-nav" aria-label="사용자 메뉴">
-        {isAuthLoaded && isAuthenticated ? (
+        {!isAuthLoaded ? (
+          <span className="login-link auth-link-placeholder" aria-hidden="true">
+            로그아웃
+          </span>
+        ) : isAuthenticated ? (
           <button
             className="login-link"
             disabled={isLoggingOut}

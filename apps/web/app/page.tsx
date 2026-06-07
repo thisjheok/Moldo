@@ -1,20 +1,18 @@
 import { listExams } from "../lib/api";
+import { getServerIsAuthenticated } from "../lib/api/server";
 import { ApiEmptyState, ApiErrorState } from "./components/ApiState";
 import { ExamCard } from "./components/ExamCard";
 import { SiteHeader } from "./components/SiteHeader";
 
 export default async function HomePage() {
-  let exams;
-
-  try {
-    exams = await listExams();
-  } catch {
-    exams = null;
-  }
+  const [isAuthenticated, exams] = await Promise.all([
+    getServerIsAuthenticated(),
+    listExams().catch(() => null),
+  ]);
 
   return (
     <div className="app-shell">
-      <SiteHeader />
+      <SiteHeader initialIsAuthenticated={isAuthenticated} />
 
       <main className="simple-main">
         <section className="simple-hero" aria-labelledby="main-title">

@@ -37,7 +37,11 @@ function getPageNumbers(totalPages: number): number[] {
   return Array.from({ length: totalPages }, (_, index) => index + 1);
 }
 
-export function MyPageClient() {
+type MyPageClientProps = {
+  initialIsAuthenticated: boolean;
+};
+
+export function MyPageClient({ initialIsAuthenticated }: MyPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestedPage = Number(searchParams.get("page") ?? "1");
@@ -93,7 +97,7 @@ export function MyPageClient() {
   if (state.status === "loading") {
     return (
       <div className="app-shell">
-        <SiteHeader />
+        <SiteHeader initialIsAuthenticated={initialIsAuthenticated} />
         <main className="mypage-main">
           <section className="simple-filter-panel" aria-live="polite">
             <p>마이페이지 정보를 불러오는 중입니다.</p>
@@ -106,7 +110,7 @@ export function MyPageClient() {
   if (state.status === "error" || pagination === null) {
     return (
       <div className="app-shell">
-        <SiteHeader />
+        <SiteHeader initialIsAuthenticated={initialIsAuthenticated} />
         <main className="mypage-main">
           <ApiErrorState message="마이페이지 정보를 불러오지 못했습니다." />
         </main>
@@ -116,7 +120,7 @@ export function MyPageClient() {
 
   return (
     <div className="app-shell">
-      <SiteHeader />
+      <SiteHeader initialIsAuthenticated={initialIsAuthenticated} />
 
       <main className="mypage-main">
         <section className="mypage-profile-card" aria-label="사용자 정보">

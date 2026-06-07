@@ -1,11 +1,12 @@
 import { Suspense } from "react";
+import { getServerIsAuthenticated } from "../../lib/api/server";
 import { SiteHeader } from "../components/SiteHeader";
 import { MyPageClient } from "./MyPageClient";
 
-function MyPageShell() {
+function MyPageShell({ initialIsAuthenticated }: { initialIsAuthenticated: boolean }) {
   return (
     <div className="app-shell">
-      <SiteHeader />
+      <SiteHeader initialIsAuthenticated={initialIsAuthenticated} />
       <main className="mypage-main">
         <section className="simple-filter-panel" aria-live="polite">
           <p>마이페이지 정보를 불러오는 중입니다.</p>
@@ -15,10 +16,12 @@ function MyPageShell() {
   );
 }
 
-export default function MyPage() {
+export default async function MyPage() {
+  const isAuthenticated = await getServerIsAuthenticated();
+
   return (
-    <Suspense fallback={<MyPageShell />}>
-      <MyPageClient />
+    <Suspense fallback={<MyPageShell initialIsAuthenticated={isAuthenticated} />}>
+      <MyPageClient initialIsAuthenticated={isAuthenticated} />
     </Suspense>
   );
 }

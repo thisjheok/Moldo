@@ -1057,19 +1057,19 @@ export function ExamPageClient({ questions, attempt }: ExamPageClientProps) {
                 ))}
               </div>
             </section>
-          </section>
 
-          <div className="question-actions opic-question-actions">
-            <button
-              className="button primary next-question-button"
-              type="button"
-              onClick={handleNextQuestion}
-              disabled={isSavingAnswer || currentQuestionState?.isPlaying}
-            >
-              {safeCurrentQuestionIndex === questions.length - 1 ? "채점하기" : "다음 문항"}
-              <ExamIcon name="chevron" />
-            </button>
-          </div>
+            <div className="question-actions opic-question-actions">
+              <button
+                className="button primary next-question-button"
+                type="button"
+                onClick={handleNextQuestion}
+                disabled={isSavingAnswer || currentQuestionState?.isPlaying}
+              >
+                {safeCurrentQuestionIndex === questions.length - 1 ? "채점하기" : "다음 문항"}
+                <ExamIcon name="chevron" />
+              </button>
+            </div>
+          </section>
 
           <span className="sr-only" role="status" aria-live="polite">
             {microphoneError || (isSavingAnswer ? "답변을 저장하는 중입니다." : "")}

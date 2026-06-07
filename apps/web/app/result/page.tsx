@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getResult } from "../../lib/api";
-import { getServerCookieHeader } from "../../lib/api/server";
+import { getServerCookieHeader, getServerIsAuthenticated } from "../../lib/api/server";
 import { ApiErrorState } from "../components/ApiState";
 import { FeedbackCard } from "../components/FeedbackCard";
 import { ResultAnswerCard } from "../components/ResultAnswerCard";
@@ -29,12 +29,15 @@ export default async function ResultPage({ searchParams }: ResultPageProps) {
   const params = await searchParams;
   const resultId = params?.resultId ?? DEFAULT_RESULT_ID;
   const cookieHeader = await getServerCookieHeader();
-  const result = await getResult(resultId, { cookieHeader }).catch(() => null);
+  const [isAuthenticated, result] = await Promise.all([
+    getServerIsAuthenticated(cookieHeader),
+    getResult(resultId, { cookieHeader }).catch(() => null),
+  ]);
 
   if (result === null) {
     return (
       <div className="app-shell">
-        <SiteHeader />
+        <SiteHeader initialIsAuthenticated={isAuthenticated} />
         <main className="result-main">
           <ApiErrorState message="결과 정보를 불러오지 못했습니다." />
         </main>
@@ -47,7 +50,7 @@ export default async function ResultPage({ searchParams }: ResultPageProps) {
   if (!selectedAnswer) {
     return (
       <div className="app-shell">
-        <SiteHeader />
+        <SiteHeader initialIsAuthenticated={isAuthenticated} />
         <main className="result-main">
           <ApiErrorState message="표시할 결과 답변이 없습니다." />
         </main>
@@ -57,7 +60,7 @@ export default async function ResultPage({ searchParams }: ResultPageProps) {
 
   return (
     <div className="app-shell">
-      <SiteHeader />
+      <SiteHeader initialIsAuthenticated={isAuthenticated} />
 
       <main className="result-main" aria-labelledby="result-title">
         <section className="result-score-section">
