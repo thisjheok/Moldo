@@ -1,20 +1,28 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 
-from moldo_api.auth import SESSION_USER_ID_KEY, authenticate_user, require_current_user
-from moldo_api.schemas.auth import AuthSession, AuthenticatedUser, LoginRequest
+from moldo_api.auth import SESSION_USER_ID_KEY, authenticate_user, create_user, require_current_user
+from moldo_api.schemas.auth import AuthSession, AuthenticatedUser, LoginRequest, SignupRequest
 
 router = APIRouter()
 
 
 @router.post("/login", response_model=AuthSession)
 def login(request: Request, payload: LoginRequest) -> AuthSession:
-    user = authenticate_user(payload.email, payload.password)
+    user = authenticate_user(payload.username, payload.password)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password",
+            detail="Invalid username or password",
         )
 
+    request.session.clear()
+    request.session[SESSION_USER_ID_KEY] = user.id
+    return AuthSession(user=user)
+
+
+@router.post("/signup", response_model=AuthSession, status_code=status.HTTP_201_CREATED)
+def signup(request: Request, payload: SignupRequest) -> AuthSession:
+    user = create_user(payload.username, payload.email, payload.password, payload.name)
     request.session.clear()
     request.session[SESSION_USER_ID_KEY] = user.id
     return AuthSession(user=user)

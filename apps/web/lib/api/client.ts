@@ -16,6 +16,7 @@ import { apiRequest, type ApiRequestInit } from "./http";
 export type SubmitAnswerInput = Omit<SessionAnswerMetadata, "recordedAt">;
 export type AuthenticatedUser = {
   id: string;
+  username: string;
   email: string;
   name: string;
 };
@@ -29,10 +30,22 @@ export type UploadAttemptAnswerAudioInput = Omit<
   audioBlob: Blob;
 };
 
-export function login(email: string, password: string): Promise<AuthSession> {
+export function login(username: string, password: string): Promise<AuthSession> {
   return apiRequest<AuthSession>("/auth/login", {
     method: "POST",
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, password }),
+  });
+}
+
+export function signup(
+  username: string,
+  email: string,
+  password: string,
+  name: string,
+): Promise<AuthSession> {
+  return apiRequest<AuthSession>("/auth/signup", {
+    method: "POST",
+    body: JSON.stringify({ username, email, password, name }),
   });
 }
 

@@ -130,7 +130,9 @@ export function MyPageClient({ initialIsAuthenticated }: MyPageClientProps) {
             </span>
             <div>
               <h1>{state.profile.name}</h1>
-              <p>{state.profile.email}</p>
+              <p>
+                {state.profile.username} · {state.profile.email}
+              </p>
             </div>
           </div>
 

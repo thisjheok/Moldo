@@ -1,6 +1,7 @@
 {
   "id": "user-1",
-  "name": "홍길동",
+  "username": "hong",
   "email": "hong@example.com",
+  "name": "홍길동",
   "totalExamCount": 12
 }

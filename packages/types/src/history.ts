@@ -12,7 +12,8 @@ export type ExamHistoryItem = {
 
 export type MyPageProfile = {
   id: string;
-  name: string;
+  username: string;
   email: string;
+  name: string;
   totalExamCount: number;
 };

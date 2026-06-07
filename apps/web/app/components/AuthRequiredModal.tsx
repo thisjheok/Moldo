@@ -30,7 +30,7 @@ export function AuthRequiredModal({
   titleId,
 }: AuthRequiredModalProps) {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [helperMessage, setHelperMessage] = useState("");
@@ -48,11 +48,11 @@ export function AuthRequiredModal({
     setIsSubmitting(true);
 
     try {
-      await login(email, password);
+      await login(username, password);
       router.push(redirectTo);
       router.refresh();
     } catch {
-      setError("이메일 또는 비밀번호를 확인해 주세요.");
+      setError("아이디 또는 비밀번호를 확인해 주세요.");
     } finally {
       setIsSubmitting(false);
     }
@@ -84,14 +84,13 @@ export function AuthRequiredModal({
 
         <form className="auth-modal-form" onSubmit={handleLogin}>
           <label className="login-field">
-            <span>이메일</span>
+            <span>아이디</span>
             <input
-              autoComplete="email"
-              inputMode="email"
-              onChange={(event) => setEmail(event.target.value)}
+              autoComplete="username"
+              onChange={(event) => setUsername(event.target.value)}
               required
-              type="email"
-              value={email}
+              type="text"
+              value={username}
             />
           </label>
 
@@ -120,7 +119,10 @@ export function AuthRequiredModal({
         </form>
 
         <div className="login-support-actions" aria-label="계정 지원">
-          <button type="button" onClick={() => handleUnavailableAction("회원가입")}>
+          <button
+            type="button"
+            onClick={() => router.push(`/login?mode=signup&next=${encodeURIComponent(redirectTo)}`)}
+          >
             회원가입
           </button>
           <button type="button" onClick={() => handleUnavailableAction("비밀번호 찾기")}>

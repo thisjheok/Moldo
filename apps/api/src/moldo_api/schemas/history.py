@@ -19,6 +19,7 @@ class ExamHistoryItem(ApiDto):
 
 class MyPageProfile(ApiDto):
     id: str
-    name: str
+    username: str
     email: str
+    name: str
     totalExamCount: int

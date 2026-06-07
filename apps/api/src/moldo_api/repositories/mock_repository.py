@@ -137,12 +137,13 @@ def _row_to_session(row: sqlite3.Row) -> ExamSession:
     )
 
 
-def _save_attempt(attempt: ExamAttempt) -> None:
+def _save_attempt(attempt: ExamAttempt, *, user_id: str | None = None) -> None:
     with connect() as connection:
         connection.execute(
             """
             INSERT INTO attempts (
                 id,
+                user_id,
                 exam_id,
                 status,
                 result_id,
@@ -151,8 +152,9 @@ def _save_attempt(attempt: ExamAttempt) -> None:
                 answers_json,
                 submitted_at
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
+                user_id = COALESCE(excluded.user_id, attempts.user_id),
                 exam_id = excluded.exam_id,
                 status = excluded.status,
                 result_id = excluded.result_id,
@@ -163,6 +165,7 @@ def _save_attempt(attempt: ExamAttempt) -> None:
             """,
             (
                 attempt.id,
+                user_id,
                 attempt.examId,
                 attempt.status,
                 attempt.resultId,
@@ -174,12 +177,13 @@ def _save_attempt(attempt: ExamAttempt) -> None:
         )
 
 
-def _save_session(session: ExamSession) -> None:
+def _save_session(session: ExamSession, *, user_id: str | None = None) -> None:
     with connect() as connection:
         connection.execute(
             """
             INSERT INTO sessions (
                 id,
+                user_id,
                 exam_id,
                 status,
                 result_id,
@@ -188,8 +192,9 @@ def _save_session(session: ExamSession) -> None:
                 answers_json,
                 submitted_at
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
+                user_id = COALESCE(excluded.user_id, sessions.user_id),
                 exam_id = excluded.exam_id,
                 status = excluded.status,
                 result_id = excluded.result_id,
@@ -200,6 +205,7 @@ def _save_session(session: ExamSession) -> None:
             """,
             (
                 session.id,
+                user_id,
                 session.examId,
                 session.status,
                 session.resultId,
@@ -233,7 +239,7 @@ def list_questions_by_exam_id(exam_id: str) -> list[ExamQuestion]:
     )
 
 
-def create_session(exam_id: str) -> ExamSession | None:
+def create_session(exam_id: str, user_id: str) -> ExamSession | None:
     exam = get_exam_by_id(exam_id)
     if exam is None:
         return None
@@ -248,11 +254,11 @@ def create_session(exam_id: str) -> ExamSession | None:
         currentQuestionOrder=starting_order,
         answers=[],
     )
-    _save_session(session)
+    _save_session(session, user_id=user_id)
     return session
 
 
-def create_attempt(exam_id: str) -> ExamAttempt | None:
+def create_attempt(exam_id: str, user_id: str) -> ExamAttempt | None:
     exam = get_exam_by_id(exam_id)
     if exam is None:
         return None
@@ -267,19 +273,26 @@ def create_attempt(exam_id: str) -> ExamAttempt | None:
         currentQuestionOrder=starting_order,
         answers=[],
     )
-    _save_attempt(attempt)
+    _save_attempt(attempt, user_id=user_id)
     return attempt
 
 
-def get_attempt(attempt_id: str) -> ExamAttempt | None:
+def get_attempt(attempt_id: str, user_id: str | None = None) -> ExamAttempt | None:
     with connect() as connection:
-        row = connection.execute("SELECT * FROM attempts WHERE id = ?", (attempt_id,)).fetchone()
+        if user_id is None:
+            row = connection.execute("SELECT * FROM attempts WHERE id = ?", (attempt_id,)).fetchone()
+        else:
+            row = connection.execute(
+                "SELECT * FROM attempts WHERE id = ? AND user_id = ?",
+                (attempt_id, user_id),
+            ).fetchone()
     return _row_to_attempt(row) if row is not None else None
 
 
 def save_attempt_answer_audio(
     attempt_id: str,
     *,
+    user_id: str,
     question_id: str,
     question_order: int,
     duration_seconds: int,
@@ -288,7 +301,7 @@ def save_attempt_answer_audio(
     audio_file_name: str | None = None,
     storage: AudioStorage = DEFAULT_AUDIO_STORAGE,
 ) -> ExamAttempt | None:
-    attempt = get_attempt(attempt_id)
+    attempt = get_attempt(attempt_id, user_id)
     if attempt is None:
         return None
 
@@ -334,8 +347,8 @@ def save_attempt_answer_audio(
     return updated_attempt
 
 
-def submit_attempt(attempt_id: str) -> ExamAttempt | None:
-    attempt = get_attempt(attempt_id)
+def submit_attempt(attempt_id: str, user_id: str) -> ExamAttempt | None:
+    attempt = get_attempt(attempt_id, user_id)
     if attempt is None:
         return None
 
@@ -354,6 +367,13 @@ def complete_attempt_with_result(attempt_id: str, result: ExamResult) -> ExamAtt
     if attempt is None:
         return None
 
+    with connect() as connection:
+        row = connection.execute(
+            "SELECT user_id FROM attempts WHERE id = ?",
+            (attempt_id,),
+        ).fetchone()
+    user_id = row["user_id"] if row is not None else None
+
     completed_attempt = attempt.model_copy(
         update={
             "status": "completed",
@@ -363,11 +383,13 @@ def complete_attempt_with_result(attempt_id: str, result: ExamResult) -> ExamAtt
     with connect() as connection:
         connection.execute(
             """
-            INSERT INTO results (id, payload_json)
-            VALUES (?, ?)
-            ON CONFLICT(id) DO UPDATE SET payload_json = excluded.payload_json
+            INSERT INTO results (id, user_id, payload_json)
+            VALUES (?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                user_id = excluded.user_id,
+                payload_json = excluded.payload_json
             """,
-            (result.id, _dump_model(result)),
+            (result.id, user_id, _dump_model(result)),
         )
     _save_attempt(completed_attempt)
     return completed_attempt
@@ -383,22 +405,29 @@ def fail_attempt(attempt_id: str) -> ExamAttempt | None:
     return failed_attempt
 
 
-def get_session(session_id: str) -> ExamSession | None:
+def get_session(session_id: str, user_id: str | None = None) -> ExamSession | None:
     with connect() as connection:
-        row = connection.execute("SELECT * FROM sessions WHERE id = ?", (session_id,)).fetchone()
+        if user_id is None:
+            row = connection.execute("SELECT * FROM sessions WHERE id = ?", (session_id,)).fetchone()
+        else:
+            row = connection.execute(
+                "SELECT * FROM sessions WHERE id = ? AND user_id = ?",
+                (session_id, user_id),
+            ).fetchone()
     return _row_to_session(row) if row is not None else None
 
 
 def save_session_answer(
     session_id: str,
     *,
+    user_id: str,
     question_id: str,
     question_order: int,
     duration_seconds: int,
     audio_file_name: str | None = None,
     mime_type: str | None = None,
 ) -> ExamSession | None:
-    session = get_session(session_id)
+    session = get_session(session_id, user_id)
     if session is None:
         return None
 
@@ -434,8 +463,8 @@ def save_session_answer(
     return updated_session
 
 
-def submit_session(session_id: str) -> ExamSession | None:
-    session = get_session(session_id)
+def submit_session(session_id: str, user_id: str) -> ExamSession | None:
+    session = get_session(session_id, user_id)
     if session is None:
         return None
 
@@ -449,11 +478,23 @@ def submit_session(session_id: str) -> ExamSession | None:
     return submitted_session
 
 
-def get_result(result_id: str) -> ExamResult | None:
+def get_result(result_id: str, user_id: str | None = None) -> ExamResult | None:
     with connect() as connection:
-        row = connection.execute("SELECT payload_json FROM results WHERE id = ?", (result_id,)).fetchone()
+        if user_id is None:
+            row = connection.execute(
+                "SELECT payload_json FROM results WHERE id = ?",
+                (result_id,),
+            ).fetchone()
+        else:
+            row = connection.execute(
+                "SELECT payload_json FROM results WHERE id = ? AND user_id = ?",
+                (result_id, user_id),
+            ).fetchone()
     if row is not None:
         return _load_result(json.loads(row["payload_json"]))
+
+    if user_id is not None and user_id != "user-1":
+        return None
 
     data = _load_json("results.json")
     if not isinstance(data, list):
@@ -462,14 +503,21 @@ def get_result(result_id: str) -> ExamResult | None:
     return next((result for result in results if result.id == result_id), None)
 
 
-def list_my_results() -> list[ExamHistoryItem]:
+def list_my_results(user_id: str) -> list[ExamHistoryItem]:
     data = _load_json("histories.json")
     saved_histories = []
-    if isinstance(data, list):
+    if user_id == "user-1" and isinstance(data, list):
         saved_histories = [ExamHistoryItem.model_validate(item) for item in data]
 
     with connect() as connection:
-        rows = connection.execute("SELECT payload_json FROM results").fetchall()
+        rows = connection.execute(
+            """
+            SELECT payload_json
+            FROM results
+            WHERE user_id = ? OR (? = 'user-1' AND user_id IS NULL)
+            """,
+            (user_id, user_id),
+        ).fetchall()
 
     generated_results = [_load_result(json.loads(row["payload_json"])) for row in rows]
     generated_histories = [
@@ -495,9 +543,14 @@ def list_my_results() -> list[ExamHistoryItem]:
     )
 
 
-def get_my_profile() -> MyPageProfile:
-    profile = MyPageProfile.model_validate(_load_json("profile.json"))
-    return profile.model_copy(update={"totalExamCount": len(list_my_results())})
+def get_my_profile(user_id: str, *, username: str, email: str, name: str) -> MyPageProfile:
+    return MyPageProfile(
+        id=user_id,
+        username=username,
+        email=email,
+        name=name,
+        totalExamCount=len(list_my_results(user_id)),
+    )
 
 
 listExams = list_exams

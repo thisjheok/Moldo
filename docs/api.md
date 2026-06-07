@@ -10,12 +10,13 @@
 
 FastAPI is the authentication owner. The API issues a signed cookie session named `moldo_session` by default, and protected endpoints require that cookie.
 
-Initial users are seeded into SQLite from `MOLDO_AUTH_USERS` as a JSON array:
+Initial users are seeded into SQLite from `MOLDO_AUTH_USERS` as a JSON array. `password` values may be plain text in configuration; they are stored as password hashes in SQLite.
 
 ```json
 [
   {
     "id": "user-1",
+    "username": "hong",
     "email": "hong@example.com",
     "password": "password",
     "name": "홍길동"
@@ -85,13 +86,13 @@ Protected endpoint groups:
 
 ### `POST /auth/login`
 
-설명: 이메일/비밀번호로 로그인하고 signed cookie session을 발급한다.
+설명: 아이디/비밀번호로 로그인하고 signed cookie session을 발급한다.
 
 Request body:
 
 ```json
 {
-  "email": "hong@example.com",
+  "username": "hong",
   "password": "password"
 }
 ```
@@ -102,6 +103,35 @@ Request body:
 {
   "user": {
     "id": "user-1",
+    "username": "hong",
+    "email": "hong@example.com",
+    "name": "홍길동"
+  }
+}
+```
+
+### `POST /auth/signup`
+
+설명: 아이디, 이메일, 비밀번호, 이름으로 회원가입하고 signed cookie session을 발급한다. 로그인은 아이디로만 수행하며, 이메일은 계정 복구용 사용자 정보로 저장된다. 비밀번호는 SQLite에 해시로 저장된다.
+
+Request body:
+
+```json
+{
+  "username": "hong",
+  "email": "hong@example.com",
+  "password": "password123",
+  "name": "홍길동"
+}
+```
+
+응답 예시:
+
+```json
+{
+  "user": {
+    "id": "user-00000000-0000-0000-0000-000000000000",
+    "username": "hong",
     "email": "hong@example.com",
     "name": "홍길동"
   }
@@ -118,9 +148,26 @@ Request body:
 {
   "user": {
     "id": "user-1",
+    "username": "hong",
     "email": "hong@example.com",
     "name": "홍길동"
   }
+}
+```
+
+### `GET /me/profile`
+
+설명: 현재 로그인 사용자의 프로필 조회
+
+응답 예시:
+
+```json
+{
+  "id": "user-1",
+  "username": "hong",
+  "email": "hong@example.com",
+  "name": "홍길동",
+  "totalExamCount": 12
 }
 ```
 
@@ -377,15 +424,15 @@ Request body: 없음
 
 ### `GET /me/profile`
 
-설명: mock 사용자 프로필 조회
+설명: 현재 로그인 사용자의 프로필 조회
 
 응답 예시:
 
 ```json
 {
   "id": "user-1",
+  "username": "hong",
   "name": "홍길동",
-  "email": "hong@example.com",
   "totalExamCount": 12
 }
 ```

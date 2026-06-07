@@ -13,6 +13,7 @@ export {
   listMyResults,
   login,
   logout,
+  signup,
   submitAttempt,
   submitAnswer,
   submitSession,

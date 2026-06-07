@@ -266,18 +266,29 @@ svg {
 
 .login-support-actions {
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: var(--space-4);
+  text-align: center;
 }
 
+.login-support-actions a,
 .login-support-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 36px;
+  padding: 0;
   border: 0;
   background: transparent;
   color: var(--color-primary-strong);
+  font: inherit;
   font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
 }
 
+.login-support-actions a:hover,
 .login-support-actions button:hover {
   text-decoration: underline;
 }

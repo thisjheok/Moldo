@@ -20,6 +20,7 @@ class AuthUserSettings(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: str
+    username: str
     email: str
     password: str
     name: str
@@ -69,10 +70,15 @@ def _load_auth_users() -> list[AuthUserSettings]:
             raise ValueError("MOLDO_AUTH_USERS must be a JSON array.")
         return [AuthUserSettings.model_validate(user) for user in parsed_users]
 
+    default_username = os.getenv("MOLDO_DEFAULT_USER_USERNAME")
+    if not default_username:
+        return []
+
     return [
         AuthUserSettings(
             id=os.getenv("MOLDO_DEFAULT_USER_ID", "user-1"),
-            email=os.getenv("MOLDO_DEFAULT_USER_EMAIL", "hong@example.com"),
+            username=default_username,
+            email=os.getenv("MOLDO_DEFAULT_USER_EMAIL", f"{default_username}@example.com"),
             password=os.getenv("MOLDO_DEFAULT_USER_PASSWORD", "password"),
             name=os.getenv("MOLDO_DEFAULT_USER_NAME", "홍길동"),
         )

@@ -1,4 +1,4 @@
-from moldo_api.schemas.auth import AuthenticatedUser, AuthSession, LoginRequest
+from moldo_api.schemas.auth import AuthenticatedUser, AuthSession, LoginRequest, SignupRequest
 from moldo_api.schemas.exam import (
     ExamIconName,
     ExamMode,
@@ -13,6 +13,7 @@ from moldo_api.schemas.session import ExamSession, SessionAnswerMetadata, Sessio
 
 __all__ = [
     "LoginRequest",
+    "SignupRequest",
     "AuthenticatedUser",
     "AuthSession",
     "ExamIconName",
